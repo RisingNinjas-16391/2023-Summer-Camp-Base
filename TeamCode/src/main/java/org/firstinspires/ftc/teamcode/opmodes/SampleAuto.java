@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
 
 @Config 
 @Autonomous(group = "drive")
-public class AutoBlue extends LinearOpMode {
+public class SampleAuto extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -26,25 +26,15 @@ public class AutoBlue extends LinearOpMode {
                 .build();
 
         Trajectory Back10 = drive.trajectoryBuilder(new Pose2d())
-                .back(-9)
-                .build();
-
-        Trajectory strafeLeft46 = drive.trajectoryBuilder(new Pose2d())
-                .strafeLeft(-8)
-                .build();
-
-        Trajectory Forward20 = drive.trajectoryBuilder(new Pose2d())
-                .forward(-20)
+                .back(-10)
                 .build();
         waitForStart();
 
-//        drive.followTrajectory(Forward10);
-//        drive.followTrajectory(Back10);
-//        drive.followTrajectory(strafeLeft46);
-//        drive.followTrajectory(Forward20);
+        drive.followTrajectory(Forward10);
+        drive.followTrajectory(Back10);
         pivot.setPower(100);
         pivot.setAngle(0);
-//        feeder.setPower(100);
+        feeder.setPower(100);
         sleep(5000);
     }
 }
