@@ -21,20 +21,38 @@ public class SampleAuto extends LinearOpMode {
         FeederSubsystem feeder = new FeederSubsystem(hardwareMap);
         MecanumDrive drive = new MecanumDrive(hardwareMap);
 
-        Trajectory Forward10 = drive.trajectoryBuilder(new Pose2d())
-                .forward(-10)
+
+
+        Trajectory trajectoryForward = drive.trajectoryBuilder(new Pose2d())
+                .forward(-12)
                 .build();
 
-        Trajectory Back10 = drive.trajectoryBuilder(new Pose2d())
-                .back(-10)
+        Trajectory trajectoryForward_2 = drive.trajectoryBuilder(new Pose2d())
+                .forward(-1)
                 .build();
+
+        Trajectory trajectoryBackward = drive.trajectoryBuilder(trajectoryForward.end())
+                .back(-13)
+                .build();
+
+        Trajectory trajectoryRight = drive.trajectoryBuilder(new Pose2d())
+                .strafeRight(-10)
+                .build();
+
         waitForStart();
 
-        drive.followTrajectory(Forward10);
-        drive.followTrajectory(Back10);
-        pivot.setPower(100);
-        pivot.setAngle(0);
-        feeder.setPower(100);
-        sleep(5000);
+//feeder.setPower(75);
+        drive.followTrajectory(trajectoryForward);
+        feeder.setPower(0);
+//pivot.setPower(100);
+//pivot.setAngle(0.7);
+//drive.followTrajectory(trajectoryForward_2);
+        feeder.setPower(-25);
+        sleep(500);
+        drive.followTrajectory(trajectoryBackward);
+        sleep(500);
+        drive.followTrajectory(trajectoryRight);
+        sleep(500);
+        drive.followTrajectory(trajectoryForward);
     }
 }
