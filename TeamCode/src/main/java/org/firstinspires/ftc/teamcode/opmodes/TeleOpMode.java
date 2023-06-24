@@ -33,7 +33,6 @@ public class TeleOpMode extends CommandOpMode {
     private GamepadButton zeroPos;
     private GamepadButton feedPos;
     private GamepadButton scorePos;
-    
 
     @Override
     public void initialize() {
@@ -48,11 +47,9 @@ public class TeleOpMode extends CommandOpMode {
 
         this.driveCommand = new TeleOpDriveCommand(driveSubsystem, driverController::getLeftY, driverController::getLeftX, driverController::getRightX);
         this.pivotPowerCommand = new PivotPowerCommand(pivotSubsystem, () -> (driverController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
-        this.feederCommand = new FeederCommand(feederSubsystem, () -> driverController.getButton(GamepadKeys.Button.RIGHT_BUMPER) ? -0.5 : 0.3);
+        this.feederCommand = new FeederCommand(feederSubsystem, () -> (driverController.getButton(GamepadKeys.Button.RIGHT_BUMPER) ? 1 : 0) - (driverController.getButton(GamepadKeys.Button.LEFT_BUMPER) ? 1 : 0));
 
-        register(driveSubsystem);
-        register(pivotSubsystem);
-        register(feederSubsystem);
+        register(driveSubsystem, pivotSubsystem, feederSubsystem);
 
         setDefaultCommands();
         configureButtonBindings();
@@ -63,7 +60,6 @@ public class TeleOpMode extends CommandOpMode {
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(0)));
         feedPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(90)));
         scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-30)));
-
     }
     
 
