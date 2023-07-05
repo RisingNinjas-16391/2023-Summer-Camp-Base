@@ -12,6 +12,7 @@ import org.firstinspires.ftc.teamcode.commands.BlueAutoCommand;
 import org.firstinspires.ftc.teamcode.commands.RedAutoCommand;
 import org.firstinspires.ftc.teamcode.commands.FeederCommand;
 import org.firstinspires.ftc.teamcode.commands.PivotCommand;
+import org.firstinspires.ftc.teamcode.commands.SpinnyCommand;
 import org.firstinspires.ftc.teamcode.commands.TeleOpDriveCommand;
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
@@ -32,6 +33,9 @@ public class RobotContainer {
     private GamepadButton scorePos;
     private GamepadButton intake;
     private GamepadButton outake;
+    private GamepadButton spinny;
+    private GamepadButton up;
+    private GamepadButton down;
 
     public RobotContainer(HardwareMap hwMap, Gamepad gamepad1, Telemetry telemetry){
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
@@ -62,17 +66,20 @@ public class RobotContainer {
         scorePos = null;
         intake = null;
         outake = null;
+        spinny = null;
 
         setAutoCommands(autoNum, telemetry);
     }
 
     public void setDefaultCommands(){
         driveSubsystem.setDefaultCommand(new TeleOpDriveCommand(driveSubsystem, driverController::getLeftY, driverController::getLeftX, driverController::getRightX));
+        feederSubsystem.setDefaultCommand(new FeederCommand(feederSubsystem,() -> (driverController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))));
     }
 
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(0)));
         scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-90)));
+        spinny.whileHeld(new SpinnyCommand(spinnySubsystem, () -> 0.7).perpetually());
         intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually());
         outake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually());
     }
