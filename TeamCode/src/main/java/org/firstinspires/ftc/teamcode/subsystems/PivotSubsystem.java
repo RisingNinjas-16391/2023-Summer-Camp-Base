@@ -56,7 +56,11 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public boolean atSetpoint() {
-        return kPIDF.atSetPoint();
+        return Math.abs(desiredAngle - getAngle()) < 0.4;
+    }
+
+    public boolean isBusy() {
+        return pivot.isBusy();
     }
 
     @Override
@@ -67,6 +71,8 @@ public class PivotSubsystem extends SubsystemBase {
                 .addData("\nPivot Angle", getAngle());
         telemetry.update();
     }
+
+
 
 }
 

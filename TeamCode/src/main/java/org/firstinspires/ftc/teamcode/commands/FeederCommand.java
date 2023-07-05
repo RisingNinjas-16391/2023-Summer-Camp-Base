@@ -22,4 +22,9 @@ public class FeederCommand extends CommandBase {
         feederSubsystem.setPower(power.getAsDouble());
     }
 
+    @Override
+    public boolean isFinished() {
+        return true;
+    }
+
 }

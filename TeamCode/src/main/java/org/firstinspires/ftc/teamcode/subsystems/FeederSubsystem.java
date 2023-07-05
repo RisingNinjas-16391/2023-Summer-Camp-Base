@@ -22,4 +22,8 @@ public class FeederSubsystem extends SubsystemBase {
     public double getPower(){
         return feeder.getPower();
     }
+
+    public boolean isBusy() {
+        return feeder.isBusy();
+    }
 }
