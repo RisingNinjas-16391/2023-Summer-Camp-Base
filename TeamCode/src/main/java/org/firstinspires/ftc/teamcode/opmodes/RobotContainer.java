@@ -47,7 +47,7 @@ public class RobotContainer {
         driverController = new GamepadEx(gamepad1);
 
         zeroPos = new GamepadButton(driverController, GamepadKeys.Button.B);
-        scorePos = new GamepadButton(driverController, GamepadKeys.Button.A);
+        scorePos = new GamepadButton(driverController, GamepadKeys.Button.Y);
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
         outake = new GamepadButton(driverController, GamepadKeys.Button.LEFT_BUMPER);
         spinny = new GamepadButton(driverController, GamepadKeys.Button.X);
@@ -79,7 +79,7 @@ public class RobotContainer {
 
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(0)));
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(90)));
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-90)));
         spinny.whenHeld(new SpinnyCommand(spinnySubsystem, () -> 0.7).perpetually())
                 .whenReleased(new SpinnyCommand(spinnySubsystem, () -> 0).perpetually());
         intake.whenHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
