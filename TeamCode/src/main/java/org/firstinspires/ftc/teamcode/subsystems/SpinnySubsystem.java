@@ -21,4 +21,8 @@ public class SpinnySubsystem extends SubsystemBase {
     public double getPower() {
         return spinny.getPower();
     }
+
+    public boolean isBusy(){
+        return spinny.isBusy();
+    }
 }

@@ -50,6 +50,7 @@ public class RobotContainer {
         scorePos = new GamepadButton(driverController, GamepadKeys.Button.A);
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
         outake = new GamepadButton(driverController, GamepadKeys.Button.LEFT_BUMPER);
+        spinny = new GamepadButton(driverController, GamepadKeys.Button.X);
 
         setDefaultCommands();
         configureButtonBindings();

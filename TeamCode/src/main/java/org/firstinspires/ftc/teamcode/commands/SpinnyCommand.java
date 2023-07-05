@@ -21,4 +21,9 @@ public class SpinnyCommand extends CommandBase {
     public void execute() {
         spinnySubsystem.setPower(power.getAsDouble());
     }
+
+    @Override
+    public boolean isFinished(){
+        return !spinnySubsystem.isBusy();
+    }
 }
