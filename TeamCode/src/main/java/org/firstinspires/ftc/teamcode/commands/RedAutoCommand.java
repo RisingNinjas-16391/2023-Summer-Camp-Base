@@ -28,16 +28,17 @@ public class RedAutoCommand extends SequentialCommandGroup {
                 .back(-75)
                 .build();
 
-        TrajectorySequenceSupplier turn80 = ()->drive.trajectorySequenceBuilder((new Pose2d()))
+        TrajectorySequenceSupplier turn80 = () -> drive.trajectorySequenceBuilder((new Pose2d()))
                 .turn(Math.toRadians(80))
                 .build();
 
-        TrajectorySequenceSupplier turn100 = ()->drive.trajectorySequenceBuilder((new Pose2d()))
+        TrajectorySequenceSupplier turn100 = () -> drive.trajectorySequenceBuilder((new Pose2d()))
                 .turn(Math.toRadians(-100))
                 .build();
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
-                new PivotCommand(pivot, Math.toRadians(-90)),
+                new PivotCommand(pivot, Math.toRadians(90)),
+                new WaitCommand(500),
                 new FollowTrajectoryCommand(drive, strafeLeft50),
                 new WaitCommand(500),
                 new FollowTrajectoryCommand(drive, forward30),

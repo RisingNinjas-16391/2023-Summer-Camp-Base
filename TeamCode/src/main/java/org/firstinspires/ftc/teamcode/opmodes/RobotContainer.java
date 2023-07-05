@@ -79,10 +79,13 @@ public class RobotContainer {
 
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(0)));
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-90)));
-        spinny.whileHeld(new SpinnyCommand(spinnySubsystem, () -> 0.7).perpetually());
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually());
-        outake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually());
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(90)));
+        spinny.whenHeld(new SpinnyCommand(spinnySubsystem, () -> 0.7).perpetually())
+                .whenReleased(new SpinnyCommand(spinnySubsystem, () -> 0).perpetually());
+        intake.whenHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
+        outake.whenHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {

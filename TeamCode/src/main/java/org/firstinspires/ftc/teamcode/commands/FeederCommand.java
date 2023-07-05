@@ -21,10 +21,4 @@ public class FeederCommand extends CommandBase {
     public void execute() {
         feederSubsystem.setPower(power.getAsDouble());
     }
-
-    @Override
-    public boolean isFinished() {
-        return !feederSubsystem.isBusy();
-    }
-
 }
