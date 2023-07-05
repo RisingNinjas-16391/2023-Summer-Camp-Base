@@ -73,8 +73,8 @@ public class RobotContainer {
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(0)));
         scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-90)));
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7));
-        outake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7));
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually());
+        outake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually());
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
