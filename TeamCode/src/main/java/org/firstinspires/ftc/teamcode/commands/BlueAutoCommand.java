@@ -37,7 +37,7 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                 .build();
 
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-                new PivotCommand(pivot, Math.toRadians(-45)),
+                new PivotCommand(pivot, Math.toRadians(-90)),
                 new FollowTrajectoryCommand(drive, strafeRight50),
                 new WaitCommand(500),
                 new FollowTrajectoryCommand(drive, forward30),
