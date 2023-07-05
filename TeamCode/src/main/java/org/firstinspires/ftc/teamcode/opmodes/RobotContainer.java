@@ -27,10 +27,6 @@ public class RobotContainer {
     private FeederSubsystem feederSubsystem;
     private SpinnySubsystem spinnySubsystem;
 
-    private TeleOpDriveCommand driveCommand;
-    private PivotPowerCommand pivotPowerCommand;
-    private FeederCommand feederCommand;
-    private SpinnyCommand spinnyCommand;
     private GamepadEx driverController;
 
     private GamepadButton zeroPos;
