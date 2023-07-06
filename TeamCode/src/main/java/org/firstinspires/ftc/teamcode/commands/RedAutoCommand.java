@@ -37,14 +37,16 @@ public class RedAutoCommand extends SequentialCommandGroup {
                 .build();
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
-                new PivotCommand(pivot, Math.toRadians(90)),
-                new WaitCommand(500),
+                new PivotCommand(pivot, Math.toRadians(-110)),
+                new WaitCommand(2000),
+
                 new FollowTrajectoryCommand(drive, strafeLeft50),
-                new WaitCommand(500),
                 new FollowTrajectoryCommand(drive, forward30),
-                new FeederCommand(feeder, () -> -1),
+
+                new FeederAutoCommand(feeder, () -> -1),
                 new WaitCommand(500),
-                new FeederCommand(feeder, () -> 0),
+                new FeederAutoCommand(feeder, () -> 0),
+
                 new FollowTrajectoryCommand(drive, turn80),
                 new FollowTrajectoryCommand(drive, forward75),
                 new FollowTrajectoryCommand(drive, turn100),
