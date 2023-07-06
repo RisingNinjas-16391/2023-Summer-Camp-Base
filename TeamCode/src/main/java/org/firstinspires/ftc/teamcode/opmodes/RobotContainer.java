@@ -33,9 +33,8 @@ public class RobotContainer {
     private GamepadButton scorePos;
     private GamepadButton intake;
     private GamepadButton outake;
-    private GamepadButton spinny;
-    private GamepadButton up;
-    private GamepadButton down;
+    private GamepadButton spinnyCW;
+    private GamepadButton spinnyCCW;
 
     public RobotContainer(HardwareMap hwMap, Gamepad gamepad1, Telemetry telemetry){
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
@@ -46,11 +45,12 @@ public class RobotContainer {
 
         driverController = new GamepadEx(gamepad1);
 
-        zeroPos = new GamepadButton(driverController, GamepadKeys.Button.B);
-        scorePos = new GamepadButton(driverController, GamepadKeys.Button.Y);
+        zeroPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_DOWN);
+        scorePos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_UP);
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
         outake = new GamepadButton(driverController, GamepadKeys.Button.LEFT_BUMPER);
-        spinny = new GamepadButton(driverController, GamepadKeys.Button.X);
+        spinnyCW = new GamepadButton(driverController, GamepadKeys.Button.X);
+        spinnyCCW = new GamepadButton(driverController, GamepadKeys.Button.B);
 
         setDefaultCommands();
         configureButtonBindings();
@@ -67,7 +67,8 @@ public class RobotContainer {
         scorePos = null;
         intake = null;
         outake = null;
-        spinny = null;
+        spinnyCW = null;
+        spinnyCCW = null;
 
         setAutoCommands(autoNum, telemetry);
     }
@@ -80,11 +81,16 @@ public class RobotContainer {
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(0)));
         scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-105)));
-        spinny.whenHeld(new SpinnyCommand(spinnySubsystem, () -> 0.7).perpetually())
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-90)));
+
+        spinnyCW.whenHeld(new SpinnyCommand(spinnySubsystem, () -> 0.7).perpetually())
                 .whenReleased(new SpinnyCommand(spinnySubsystem, () -> 0).perpetually());
-        intake.whenHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
+        spinnyCCW.whenHeld(new SpinnyCommand(spinnySubsystem, () -> -0.7).perpetually())
+                .whenReleased(new SpinnyCommand(spinnySubsystem, () -> 0).perpetually());
+
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
-        outake.whenHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
+        outake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
 
