@@ -80,7 +80,7 @@ public class RobotContainer {
 
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(0)));
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-110)));
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-90)));
 
         spinnyCW.whenHeld(new SpinnyCommand(spinnySubsystem, () -> 0.7).perpetually())
                 .whenReleased(new SpinnyCommand(spinnySubsystem, () -> 0).perpetually());
