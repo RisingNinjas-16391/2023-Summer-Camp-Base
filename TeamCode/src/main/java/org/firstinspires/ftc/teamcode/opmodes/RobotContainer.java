@@ -87,9 +87,9 @@ public class RobotContainer {
         spinnyCCW.whenHeld(new SpinnyCommand(spinnySubsystem, () -> -0.7).perpetually())
                 .whenReleased(new SpinnyCommand(spinnySubsystem, () -> 0).perpetually());
 
-        intake.whenHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
-        outake.whenHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
+        outake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
 
