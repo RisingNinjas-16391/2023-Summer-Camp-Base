@@ -12,9 +12,10 @@ import java.util.function.DoubleSupplier;
 public class PivotPowerCommand extends CommandBase {
     private final PivotSubsystem pivot;
     private final DoubleSupplier power;
+    private double currentAngle = 0;
     private final ElapsedTime timer = new ElapsedTime(ElapsedTime.Resolution.SECONDS);
 
-    public static double speed = 0.25;
+    public static double speed = 1;
 
     public PivotPowerCommand(PivotSubsystem pivot, DoubleSupplier power) {
         this.pivot = pivot;
@@ -30,7 +31,11 @@ public class PivotPowerCommand extends CommandBase {
 
     @Override
     public void execute() {
-        timer.reset();
+        if (Math.abs(power.getAsDouble()) < 0.1) {
+            timer.reset();
+            return;
+        }
         pivot.setAngle(pivot.getAngle() + (power.getAsDouble() * timer.time() * speed));
     }
+
 }

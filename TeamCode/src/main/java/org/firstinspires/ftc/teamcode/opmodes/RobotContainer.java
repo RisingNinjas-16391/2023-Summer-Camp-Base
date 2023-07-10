@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.commands.BlueAutoCommand;
+import org.firstinspires.ftc.teamcode.commands.PivotPowerCommand;
 import org.firstinspires.ftc.teamcode.commands.RedAutoCommand;
 import org.firstinspires.ftc.teamcode.commands.FeederCommand;
 import org.firstinspires.ftc.teamcode.commands.PivotCommand;
@@ -64,11 +65,12 @@ public class RobotContainer {
 
     public void setDefaultCommands(){
         driveSubsystem.setDefaultCommand(new TeleOpDriveCommand(driveSubsystem, driverController::getLeftY, driverController::getLeftX, driverController::getRightX));
+        pivotSubsystem.setDefaultCommand(new PivotPowerCommand(pivotSubsystem, () -> (driverController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))));
     }
 
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(0)));
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-90)));
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(90)));
 
         intake.whileHeld(new FeederCommand(feederSubsystem, () -> 1).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());

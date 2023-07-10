@@ -24,6 +24,6 @@ public class PivotCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return !pivotSubsystem.atSetpoint();
+        return pivotSubsystem.atSetpoint();
     }
 }

@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 @Config
 @Autonomous(group="drive")
 public class RedAuto extends CommandOpMode {
-
+    @Override
     public void initialize(){
         waitForStart();
         new RobotContainer(hardwareMap, 1, telemetry);
