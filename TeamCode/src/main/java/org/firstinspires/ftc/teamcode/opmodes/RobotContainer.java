@@ -72,7 +72,7 @@ public class RobotContainer {
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(100)));
         scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-45)));
 
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.5).perpetually())
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
         outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.25).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
