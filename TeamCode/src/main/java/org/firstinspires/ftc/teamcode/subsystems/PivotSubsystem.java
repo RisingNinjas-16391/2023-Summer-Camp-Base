@@ -76,6 +76,7 @@ public class PivotSubsystem extends SubsystemBase {
         telemetry.addLine("Pivot")
                 .addData("\nEncoder Ticks Pivot:", pivot.getCurrentPosition())
                 .addData("\nPivot Angle Degrees", Math.toDegrees(getAngle()))
+                .addData("\nDesired Pivot Angle Degrees", Math.toDegrees(desiredAngle))
                 .addData("\nAt Setpoint", atSetpoint());
 
         telemetry.update();
