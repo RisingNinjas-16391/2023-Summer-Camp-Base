@@ -13,10 +13,9 @@ public class RedAutoCommand extends SequentialCommandGroup {
 
     public RedAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
         TrajectorySequenceSupplier pathA = () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                .forward(-10)
-                .back(-10)
-                .strafeRight(-10)
-                .strafeLeft(-10)
+                .forward(-55)
+                .strafeRight(-60)
+                .back(-85)
                 .build();
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
