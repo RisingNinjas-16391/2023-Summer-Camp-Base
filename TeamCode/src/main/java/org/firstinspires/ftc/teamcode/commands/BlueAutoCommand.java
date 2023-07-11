@@ -16,11 +16,11 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                 .build();
 
         TrajectorySequenceSupplier back50 = () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                .back(-50)
+                .back(-10)
                 .build();
 
         TrajectorySequenceSupplier strafeRight50 = () -> drive.trajectorySequenceBuilder(new Pose2d())
-                .strafeRight(-50)
+                .strafeRight(-10)
                 .build();
 
         TrajectorySequenceSupplier strafeLeft50 = () -> drive.trajectorySequenceBuilder(new Pose2d())
@@ -36,16 +36,12 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                 .build();
 
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-                new PivotCommand(pivot, Math.toRadians(90)),
+                new FollowTrajectoryCommand(drive, back50),
                 new PivotCommand(pivot, Math.toRadians(0)),
                 new WaitCommand(2000),
-
                 new FollowTrajectoryCommand(drive, forward50),
-                new FollowTrajectoryCommand(drive, back50),
                 new FollowTrajectoryCommand(drive, strafeLeft50),
-                new FollowTrajectoryCommand(drive, strafeRight50),
-                new FollowTrajectoryCommand(drive, turnLeft90),
-                new FollowTrajectoryCommand(drive, turnRight90),
+                new FollowTrajectoryCommand(drive, back50),
 
                 new FeederAutoCommand(feeder, () -> -1),
                 new WaitCommand(500),
