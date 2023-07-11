@@ -22,13 +22,13 @@ public class PivotSubsystem extends SubsystemBase {
     private final Telemetry telemetry;
 
     //TODO: Tune kP for arm. If the arm moves too fast lower, if it moves too slow increase
-    public static PIDFController kPIDF = new PIDFController(0.6,0,0,0.2);
+    public static PIDFController kPIDF = new PIDFController(2,0,0,0.2);
 
     //TODO: Replace with preferred starting angle upon initialization
     private double desiredAngle = Math.toRadians(90);
 
     //TODO: Tune for arm, if the arm goes up without doing anything lower, if it falls then increase it
-    public static double kG = 0.4;
+    public static double kG = 0.6;
 
     //TODO: Replace with starting angle offset
     public static double angleOffset = 110;
