@@ -26,6 +26,6 @@ public class TeleOpDriveCommand extends CommandBase {
 
     @Override
     public void execute() {
-        drive.setWeightedDrivePower(new Pose2d(-y.getAsDouble(), x.getAsDouble(), omega.getAsDouble()));
+        drive.setWeightedDrivePower(new Pose2d(y.getAsDouble(), -x.getAsDouble(), -omega.getAsDouble()));
     }
 }
