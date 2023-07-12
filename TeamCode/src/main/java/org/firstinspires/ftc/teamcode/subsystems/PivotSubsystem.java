@@ -28,7 +28,7 @@ public class PivotSubsystem extends SubsystemBase {
     private double desiredAngle = Math.toRadians(90);
 
     //TODO: Tune for arm, if the arm goes up without doing anything lower, if it falls then increase it
-    public static double kG = 0.6;
+    public static double kG = 0.3;
 
     //TODO: Replace with starting angle offset
     public static double angleOffset = 110;
@@ -38,7 +38,7 @@ public class PivotSubsystem extends SubsystemBase {
     public PivotSubsystem(@NonNull HardwareMap hwMap, @NonNull Telemetry telemetry){
         pivot = hwMap.get(DcMotorEx.class, "pivot");
         pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivot.setDirection(DcMotorSimple.Direction.REVERSE);
+        pivot.setDirection(DcMotorSimple.Direction.FORWARD);
         pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         kPIDF.setTolerance(tolerance);

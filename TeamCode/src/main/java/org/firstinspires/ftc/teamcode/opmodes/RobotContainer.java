@@ -13,6 +13,7 @@ import org.firstinspires.ftc.teamcode.commands.PivotPowerCommand;
 import org.firstinspires.ftc.teamcode.commands.RedAutoCommand;
 import org.firstinspires.ftc.teamcode.commands.FeederCommand;
 import org.firstinspires.ftc.teamcode.commands.PivotCommand;
+import org.firstinspires.ftc.teamcode.commands.ScoreCommand;
 import org.firstinspires.ftc.teamcode.commands.TeleOpDriveCommand;
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
@@ -29,6 +30,7 @@ public class RobotContainer {
 
     private final GamepadButton zeroPos;
     private final GamepadButton scorePos;
+    private final GamepadButton scoreButton;
     private final GamepadButton intake;
     private final GamepadButton outtake;
 
@@ -42,6 +44,8 @@ public class RobotContainer {
 
         zeroPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_DOWN);
         scorePos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_UP);
+        scoreButton = new GamepadButton(driverController, GamepadKeys.Button.A);
+
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
         outtake = new GamepadButton(driverController, GamepadKeys.Button.LEFT_BUMPER);
 
@@ -57,6 +61,7 @@ public class RobotContainer {
         driverController = null;
         zeroPos = null;
         scorePos = null;
+        scoreButton = null;
         intake = null;
         outtake = null;
 
@@ -70,9 +75,11 @@ public class RobotContainer {
 
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(100)));
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-45)));
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(45)));
 
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.5).perpetually())
+        scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
+
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
         outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.25).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
