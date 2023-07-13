@@ -17,7 +17,7 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                 .build();
 
         TrajectorySequenceSupplier pathB = () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                .back(55)
+                .back(50)
                 .strafeRight(70)
                 .forward(90)
                 .build();
@@ -28,7 +28,7 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                 new ScoreCommand(pivot, feeder),
                 new PivotCommand(pivot, Math.toRadians(-30)),
                 new FollowTrajectoryCommand(drive, pathB)
-                );
+        );
 
         addCommands(
                 autoBlue

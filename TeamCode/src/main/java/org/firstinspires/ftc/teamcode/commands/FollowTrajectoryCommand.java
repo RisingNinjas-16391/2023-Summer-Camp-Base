@@ -16,7 +16,12 @@ public class FollowTrajectoryCommand extends CommandBase {
 
     @Override
     public void initialize(){
-        drivetrain.followTrajectorySequence(trajectory.getAsTrajectorySequence());
+        drivetrain.followTrajectorySequenceAsync(trajectory.getAsTrajectorySequence());
+    }
+
+    @Override
+    public void execute() {
+        drivetrain.update();
     }
 
     @Override
