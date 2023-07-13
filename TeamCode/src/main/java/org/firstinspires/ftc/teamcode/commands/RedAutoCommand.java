@@ -14,20 +14,19 @@ public class RedAutoCommand extends SequentialCommandGroup {
     public RedAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
         TrajectorySequenceSupplier pathA = () -> drive.trajectorySequenceBuilder((new Pose2d()))
                 .forward(12)
-                /// arm down, sushi wheels spin, arm up
+                /// place cone
                 .back(13)
                 .turn(Math.toRadians(180))
-                .forward(65.5)
+                .forward(40)
                 /// arm down, sushi wheels spin, arm up
                 .back(13)
-                .turn(Math.toRadians(180))
-                .forward(65.5)
+                .turn(Math.toRadians(190))
+                .forward(30)
                 /// place cone
                 .back(78.5)
                 .strafeLeft(49)
                 .forward(63)
                 /// arm down, sushi wheels spin, arm up
-
                 .build();
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
