@@ -21,7 +21,6 @@ public class RedAutoCommand extends SequentialCommandGroup {
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
                 new FollowTrajectoryCommand(drive, pathA)
-
         );
 
         addCommands(
