@@ -34,8 +34,6 @@ public class RedAutoCommand extends SequentialCommandGroup {
                 new FeederCommand(feeder, 0),
                 new PivotCommand(pivot, Math.toRadians(0))
 
-
-
                 );
 
         addCommands(
