@@ -13,17 +13,38 @@ public class BlueAutoCommand extends SequentialCommandGroup {
 
     public BlueAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                //lift up arm, drive to peg and score preloaded cone
+                new PivotCommand(pivot, Math.toRadians(45)),
+                new WaitCommand(2000),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .forward(20)
+                        .build()),
+                new FeederCommand(feeder, -1),
+
+                //get second cone
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .back(20)
-                        .turn(Math.toRadians(175))
-                        .forward(45)
-                        .back(10)
-                        .turn(Math.toRadians(175))
-                        .forward(80)
+                        .turn(Math.toRadians(180))
+                        .forward(50)
+                        .build()),
+                new PivotCommand(pivot, Math.toRadians(0)),
+                new WaitCommand(2000),
+                new FeederCommand (feeder, 1),
+
+                //lift up arm, drive to peg and score second cone
+                new PivotCommand(pivot, Math.toRadians(45)),
+                new WaitCommand(2000),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .turn(Math.toRadians(180))
+                        .forward(70)
+                        .build()),
+                new FeederCommand (feeder, -1),
+
+                //get on ramp
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .back(50)
-                        .strafeRight(55)
-                        .forward(60)
+                        .strafeRight(100)
+                        .forward(100)
                         .build())
         );
 

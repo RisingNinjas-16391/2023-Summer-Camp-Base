@@ -39,7 +39,7 @@ public class RobotContainer {
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
 
         pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
-        feederSubsystem = new FeederSubsystem(hwMap);
+        feederSubsystem = new FeederSubsystem(hwMap, telemetry);
 
         driverController = new GamepadEx(gamepad1);
 
@@ -59,7 +59,7 @@ public class RobotContainer {
     public RobotContainer(HardwareMap hwMap, int autoNum, Telemetry telemetry) {
         mecanumDrive = new MecanumDrive(hwMap);
         pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
-        feederSubsystem = new FeederSubsystem(hwMap);
+        feederSubsystem = new FeederSubsystem(hwMap, telemetry);
 
         driverController = null;
         zeroPos = null;
@@ -84,9 +84,9 @@ public class RobotContainer {
 
         scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
 
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 100).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
-        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.25).perpetually())
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -100).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
 
