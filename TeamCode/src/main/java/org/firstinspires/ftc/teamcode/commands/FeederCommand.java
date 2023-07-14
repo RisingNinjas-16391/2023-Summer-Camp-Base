@@ -17,6 +17,10 @@ public class FeederCommand extends CommandBase {
         addRequirements(feederSubsystem);
     }
 
+    public FeederCommand(final FeederSubsystem feeder, final double powerDouble) {
+        this(feeder, () -> powerDouble);
+    }
+
     @Override
     public void execute() {
         feederSubsystem.setPower(power.getAsDouble());
