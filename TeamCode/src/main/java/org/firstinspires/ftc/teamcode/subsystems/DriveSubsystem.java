@@ -20,11 +20,11 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-//        telemetry.addLine("Drivetrain")
-//                .addData("Left Front", drive.getWheelVelocities().get(0))
-//                .addData("Left Rear", drive.getWheelVelocities().get(1))
-//                .addData("Right Front", drive.getWheelVelocities().get(2))
-//                .addData("Right Rear", drive.getWheelVelocities().get(3));
+        telemetry.addLine("Drivetrain")
+                .addData("Left Front", drive.getWheelPositions().get(0))
+                .addData("Left Rear", drive.getWheelPositions().get(1))
+                .addData("Right Front", drive.getWheelPositions().get(2))
+                .addData("Right Rear", drive.getWheelPositions().get(3));
 
     }
 

@@ -51,7 +51,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public double getAngle() {
-        return pivot.getCurrentPosition() * ((22 * 2 * Math.PI) / (28 * 81 * 66)) + Math.toRadians(angleOffset);
+        return pivot.getCurrentPosition() * ((22 * 2 * Math.PI) / (28 * 90 * 66)) + Math.toRadians(angleOffset);
     }
 
     public void setAngle(double angle){

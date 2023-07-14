@@ -79,8 +79,8 @@ public class RobotContainer {
 
     public void configureButtonBindings(){
         zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(100)));
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(45)));
-        travelPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-30)));
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(30)));
+        travelPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(90)));
 
         scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
 
