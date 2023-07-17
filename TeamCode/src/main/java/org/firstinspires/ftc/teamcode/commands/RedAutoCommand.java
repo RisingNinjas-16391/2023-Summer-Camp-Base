@@ -15,7 +15,7 @@ public class RedAutoCommand extends SequentialCommandGroup {
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
 
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+    new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .forward(12)
                         .build()),
                 new WaitCommand(500),
