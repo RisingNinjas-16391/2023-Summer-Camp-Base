@@ -27,7 +27,6 @@ public class RedAutoCommand extends SequentialCommandGroup {
                         .forward(75)
                         .build())
 
-
         );
 
         addCommands(
