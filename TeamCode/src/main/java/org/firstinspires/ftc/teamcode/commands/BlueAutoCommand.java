@@ -14,6 +14,7 @@ public class BlueAutoCommand extends SequentialCommandGroup {
     public BlueAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
 
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
+
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .forward(12)
                         .build()),
@@ -33,6 +34,7 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                 new WaitCommand(3000),
                 new FeederAutoCommand(feeder,() -> 1)
                 );
+
 
         addCommands(
                 autoBlue
