@@ -12,7 +12,7 @@ public class FeederSubsystem extends SubsystemBase {
     private final DcMotor feeder;
     public FeederSubsystem(@NonNull HardwareMap hwMap){
         feeder = hwMap.get(DcMotor.class, "feeder");
-        feeder.setDirection(DcMotorSimple.Direction.FORWARD);
+        feeder.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     public void setPower(double power){

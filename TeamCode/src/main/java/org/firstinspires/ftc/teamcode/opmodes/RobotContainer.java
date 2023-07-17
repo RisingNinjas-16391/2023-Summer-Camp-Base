@@ -72,16 +72,15 @@ public class RobotContainer {
         driveSubsystem.setDefaultCommand(new TeleOpDriveCommand(driveSubsystem, driverController::getLeftY, driverController::getLeftX, driverController::getRightX));
         pivotSubsystem.setDefaultCommand(new PivotPowerCommand(pivotSubsystem, () -> (driverController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))));
     }
-
     public void configureButtonBindings(){
-        zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(100)));
+        zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(95)));
         scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(45)));
 
         scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
 
         intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
-        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.25).perpetually())
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.5).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
 
