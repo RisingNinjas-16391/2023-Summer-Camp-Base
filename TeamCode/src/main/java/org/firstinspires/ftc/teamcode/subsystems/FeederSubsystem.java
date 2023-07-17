@@ -8,6 +8,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.configuration.typecontainers.MotorConfigurationType;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 
@@ -17,23 +18,22 @@ public class FeederSubsystem extends SubsystemBase {
     private final Telemetry telemetry;
 
     //TODO: Tune kP for arm. If the arm moves too fast lower, if it moves too slow increase
-    public static PIDFController kPIDF = new PIDFController(2,0,0,0.2);
+    public static PIDFController kPIDF = new PIDFController(0.0001,0,0,0);
 
     //TODO: Replace with preferred starting angle upon initialization
     private double desiredPosition = 0;
 
-    //TODO: Tune for arm, if the arm goes up without doing anything lower, if it falls then increase it
-    public static double kG = 0.3;
-
-    //TODO: Replace with starting angle offset
-    public static double angleOffset = 110;
-
-    public static double tolerance = 0.2;
+    public static double tolerance = 5;
 
     public FeederSubsystem(@NonNull HardwareMap hwMap, @NonNull Telemetry telemetry){
         feeder = hwMap.get(DcMotorEx.class, "feeder");
 
         feeder.setDirection(DcMotorSimple.Direction.FORWARD);
+        feeder.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        feeder.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        feeder.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
 
         this.telemetry = telemetry;
     }

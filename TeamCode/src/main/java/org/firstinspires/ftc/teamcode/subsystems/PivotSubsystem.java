@@ -80,7 +80,6 @@ public class PivotSubsystem extends SubsystemBase {
                 .addData("\nPivot Power", calculatePID())
                 .addData("\nAt Setpoint", atSetpoint());
 
-        telemetry.update();
     }
 
 
