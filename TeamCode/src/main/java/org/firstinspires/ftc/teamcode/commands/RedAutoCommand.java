@@ -12,22 +12,40 @@ import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
 public class RedAutoCommand extends SequentialCommandGroup {
 
     public RedAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
-        TrajectorySequenceSupplier pathA = () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                .forward(10)
-                .turn(Math.toRadians(180))
-                .forward(77)
-                .back(5)
-                .turn(Math.toRadians(180))
-                .forward(72)
-                .back(62)
-                .strafeLeft(50)
-                .forward(70)
-                .build();
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
-                new FollowTrajectoryCommand(drive, pathA)
-
+                new PivotCommand(pivot, Math.toRadians(90)),
+                new WaitCommand(400),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .forward(10)
+                        .build()),
+                new PivotCommand(pivot, Math.toRadians(50)),
+                new FeederAutoCommand(feeder, 0.3),
+                new WaitCommand(500),
+                new FeederAutoCommand(feeder, 0),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .back(20)
+                        .turn(Math.toRadians(190))
+                        .forward(60)
+                        .build()),
+                new FeederAutoCommand(feeder, -1),
+                new WaitCommand(1000),
+                new PivotCommand(pivot, Math.toRadians(0)),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .back(5)
+                        .turn(Math.toRadians(180))
+                        .forward(72)
+                        .build()),
+                new PivotCommand(pivot, Math.toRadians(90)),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .back(62)
+                        .strafeLeft(50)
+                        .forward(70)
+                        .build()),
+                new FeederAutoCommand(feeder, 0),
+                new PivotCommand(pivot, Math.toRadians(0))
         );
+
 
         addCommands(
                 autoRed

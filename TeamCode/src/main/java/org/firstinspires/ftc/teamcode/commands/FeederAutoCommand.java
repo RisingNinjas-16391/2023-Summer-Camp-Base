@@ -16,6 +16,9 @@ public class FeederAutoCommand extends CommandBase {
 
         addRequirements(feederSubsystem);
     }
+    public FeederAutoCommand(final FeederSubsystem feeder, final double power) {
+        this(feeder, ()-> power);
+    }
 
     @Override
     public void execute() {
