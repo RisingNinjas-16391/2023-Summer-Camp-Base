@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -79,9 +80,9 @@ public class RobotContainer {
 
         scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
 
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
-                .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
-        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.25).perpetually())
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.5).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0.25).perpetually());
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.25).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
 

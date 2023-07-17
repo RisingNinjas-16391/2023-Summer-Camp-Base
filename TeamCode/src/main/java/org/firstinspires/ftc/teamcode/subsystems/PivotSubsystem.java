@@ -38,7 +38,7 @@ public class PivotSubsystem extends SubsystemBase {
     public PivotSubsystem(@NonNull HardwareMap hwMap, @NonNull Telemetry telemetry){
         pivot = hwMap.get(DcMotorEx.class, "pivot");
         pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivot.setDirection(DcMotorSimple.Direction.FORWARD);
+        pivot.setDirection(DcMotorSimple.Direction.REVERSE);
         pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         kPIDF.setTolerance(tolerance);
