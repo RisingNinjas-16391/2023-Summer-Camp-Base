@@ -12,24 +12,39 @@ import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
 public class BlueAutoCommand extends SequentialCommandGroup {
 
     public BlueAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
-        TrajectorySequenceSupplier pathA = () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                .forward(12)
-                /// place cone
-                .back(13)
-                .turn(Math.toRadians(180))
-                .forward(65.5)
-                /// arm down, sushi wheels spin, arm up
-                .back(13)
-                .turn(Math.toRadians(180))
-                .forward(65.5)
-                /// place cone
-                .strafeRight(49)
-                .forward(63)
-                .build();
 
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-                new FollowTrajectoryCommand(drive, pathA)
-
+            new PivotCommand(pivot, Math.toRadians(0)),
+            new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                .forward(12)
+                    .build()),
+            new PivotCommand(pivot, Math.toRadians(-50)),
+            new FeederCommand(feeder, -1),
+            new WaitCommand(500),
+            new FeederCommand(feeder, 0),
+            new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                .back(13)
+                .turn(Math.toRadians(180))
+                .forward(40)
+                .build()),
+            new PivotCommand(pivot, Math.toRadians(-100)),
+            new FeederCommand(feeder, 1),
+            new WaitCommand(500),
+            new FeederCommand(feeder, 0),
+            new PivotCommand(pivot, Math.toRadians(-50)),
+            new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                .back(13)
+                .turn(Math.toRadians(180))
+                .forward(40)
+                .build()),
+            new FeederCommand(feeder, -1),
+            new WaitCommand(500),
+            new FeederCommand(feeder, 0),
+            new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                .back(40)
+                .strafeRight(63)
+                .forward(65)
+                .build())
         );
 
         addCommands(

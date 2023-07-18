@@ -30,6 +30,7 @@ public class RobotContainer {
 
     private final GamepadButton zeroPos;
     private final GamepadButton scorePos;
+    private final GamepadButton travelPos;
     private final GamepadButton scoreButton;
     private final GamepadButton intake;
     private final GamepadButton outtake;
@@ -44,6 +45,8 @@ public class RobotContainer {
 
         zeroPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_DOWN);
         scorePos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_UP);
+        travelPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_LEFT);
+
         scoreButton = new GamepadButton(driverController, GamepadKeys.Button.A);
 
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
@@ -61,6 +64,7 @@ public class RobotContainer {
         driverController = null;
         zeroPos = null;
         scorePos = null;
+        travelPos = null;
         scoreButton = null;
         intake = null;
         outtake = null;
@@ -74,14 +78,15 @@ public class RobotContainer {
     }
 
     public void configureButtonBindings(){
-        zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(100)));
+        zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(93)));
         scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(45)));
+        travelPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-30)));
 
         scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
 
         intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
-        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.25).perpetually())
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.4).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
 
