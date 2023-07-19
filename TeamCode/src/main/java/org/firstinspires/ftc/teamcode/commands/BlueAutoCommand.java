@@ -13,25 +13,41 @@ public class BlueAutoCommand extends SequentialCommandGroup {
 
     public BlueAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
+                new PivotCommand(pivot, Math.toRadians(0)),
+                new WaitCommand(1500),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .forward(-20)
+                        .forward(20)
                         .build()),
-                new PivotCommand(pivot, Math.toRadians(45)),
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .back(-74)
-                        .strafeRight(-46)
-                        .forward(-75)
-                        .build()),
-                new FeederCommand(feeder, -1),
+
+
+                new PivotCommand(pivot, Math.toRadians(60)),
+                new WaitCommand(2000),
+
+                new FeederAutoCommand(feeder, 0.3),
                 new WaitCommand(1000),
-                new PivotCommand(pivot, Math.toRadians(90)),
+                new FeederAutoCommand(feeder,0),
 
 
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .forward(10)
+                            .back(55)
                         .build()),
-                new FeederCommand(feeder, 0),
-                new PivotCommand(pivot, Math.toRadians(0))
+
+                new PivotCommand(pivot, Math.toRadians(0)),
+
+                new FollowTrajectoryCommand(drive, ()->drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .strafeRight(65)
+                        .forward(45)
+                        .build()),
+
+                new PivotCommand(pivot, Math.toRadians(120)),
+
+                new FollowTrajectoryCommand(drive, ()->drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .forward(45)
+                        .build()),
+
+                new FeederAutoCommand(feeder, -0.8),
+                new WaitCommand(1000),
+                new FeederAutoCommand(feeder,0)
 
         );
 

@@ -14,27 +14,43 @@ public class RedAutoCommand extends SequentialCommandGroup {
     public RedAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .forward(-20)
-                        .build()),
-                new PivotCommand(pivot, Math.toRadians(45)),
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .back(-74)
-                        .strafeLeft(-46)
-                        .forward(-75)
-                        .build()),
-                new FeederCommand(feeder, -1),
+                new PivotCommand(pivot, Math.toRadians(0)),
                 new WaitCommand(1000),
-                new PivotCommand(pivot, Math.toRadians(90)),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .forward(18)
+                        .build()),
+
+
+                new PivotCommand(pivot, Math.toRadians(55)),
+                new WaitCommand(2000),
+
+                new FeederAutoCommand(feeder, 0.6),
+                new WaitCommand(1000),
+                new FeederAutoCommand(feeder,0),
 
 
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .forward(10)
+                        .back(55)
                         .build()),
-                new FeederCommand(feeder, 0),
-                new PivotCommand(pivot, Math.toRadians(0))
 
-                );
+                new PivotCommand(pivot, Math.toRadians(0)),
+
+                new FollowTrajectoryCommand(drive, ()->drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .strafeLeft(65)
+                        .forward(45)
+                        .build()),
+
+                new PivotCommand(pivot, Math.toRadians(120)),
+
+                new FollowTrajectoryCommand(drive, ()->drive.trajectorySequenceBuilder(drive.getPoseEstimate())
+                        .forward(45)
+                        .build()),
+
+                new FeederAutoCommand(feeder, -0.8),
+                new WaitCommand(1000),
+                new FeederAutoCommand(feeder,0)
+
+        );
 
         addCommands(
                 autoRed
