@@ -11,7 +11,7 @@ public class ScoreCommand extends SequentialCommandGroup {
     public ScoreCommand(PivotSubsystem pivot, FeederSubsystem feeder) {
         SequentialCommandGroup scoreCommand = new SequentialCommandGroup(
                 new PivotCommand(pivot, Math.toRadians(45)),
-                new WaitCommand(500),
+                new WaitCommand(1000),
                 new ParallelCommandGroup(
                         new PivotCommand(pivot, Math.toRadians(100)),
                         new FeederAutoCommand(feeder, () -> 0.25)
