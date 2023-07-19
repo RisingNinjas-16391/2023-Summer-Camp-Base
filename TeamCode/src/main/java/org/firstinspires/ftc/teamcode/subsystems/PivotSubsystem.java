@@ -31,7 +31,7 @@ public class PivotSubsystem extends SubsystemBase {
     public static double kG = 0.3;
 
     //TODO: Replace with starting angle offset
-    public static double angleOffset = 140;
+    public static double angleOffset = 110;
 
     public static double tolerance = 0.2;
 
