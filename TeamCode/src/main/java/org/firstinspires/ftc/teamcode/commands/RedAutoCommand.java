@@ -21,7 +21,7 @@ public class RedAutoCommand extends SequentialCommandGroup {
                         .build()),
 
 
-                new PivotCommand(pivot, Math.toRadians(55)),
+                new PivotCommand(pivot, Math.toRadians(64)),
                 new WaitCommand(2000),
 
                 new FeederAutoCommand(feeder, 0.6),

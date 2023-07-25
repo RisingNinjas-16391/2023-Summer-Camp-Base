@@ -84,9 +84,9 @@ public class RobotContainer {
 
         scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
 
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -1).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
-        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.25).perpetually())
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.55).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
 
