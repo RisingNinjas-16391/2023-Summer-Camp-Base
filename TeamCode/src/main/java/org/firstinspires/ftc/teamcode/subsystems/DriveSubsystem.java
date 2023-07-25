@@ -20,12 +20,13 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-//        telemetry.addLine("Drivetrain")
-//                .addData("Left Front", drive.getWheelVelocities().get(0))
-//                .addData("Left Rear", drive.getWheelVelocities().get(1))
-//                .addData("Right Front", drive.getWheelVelocities().get(2))
-//                .addData("Right Rear", drive.getWheelVelocities().get(3));
-
+        if (!drive.getWheelPositions().contains(null)) {
+            telemetry.addLine("Drivetrain")
+                    .addData("Left Front", drive.getWheelVelocities().get(0))
+                    .addData("Left Rear", drive.getWheelVelocities().get(1))
+                    .addData("Right Front", drive.getWheelVelocities().get(2))
+                    .addData("Right Rear", drive.getWheelVelocities().get(3));
+        }
     }
 
     public void setWeightedDrivePower(@NonNull Pose2d drivePower) {

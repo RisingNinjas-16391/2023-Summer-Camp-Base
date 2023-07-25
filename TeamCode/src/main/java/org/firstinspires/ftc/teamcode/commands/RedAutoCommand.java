@@ -28,15 +28,15 @@ public class RedAutoCommand extends SequentialCommandGroup {
                         .turn(Math.toRadians(180))
                         .forward(20)
                         .build()),
-                new PivotCommand(pivot, Math.toRadians(85)),
+                new PivotCommand(pivot, Math.toRadians(90)),
                 new WaitCommand(500),
                 new FeederAutoCommand(feeder, -0.7),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(new Pose2d(-30, 0, Math.toRadians(180)))
                         .strafeRight(5)
                         .forward(15)
                         .build()),
-                new WaitCommand(300),
-                new FeederAutoCommand(feeder, 0),
+                new WaitCommand(100),
+                new FeederAutoCommand(feeder, -0.1),
                 new WaitCommand(1000),
                 new PivotCommand(pivot, Math.toRadians(0)),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(new Pose2d(-45, -5, Math.toRadians(180)))
@@ -49,13 +49,13 @@ public class RedAutoCommand extends SequentialCommandGroup {
                 new FeederAutoCommand(feeder, 0.3),
                 new WaitCommand(500),
                 new FeederAutoCommand(feeder, 0),
-                new PivotCommand(pivot, Math.toRadians(0)),
 
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(new Pose2d(15, -2, Math.toRadians(0)))
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(new Pose2d(10, -2, Math.toRadians(0)))
                         .back(60)
-                        .strafeLeft(70)
+                        .strafeLeft(65)
                         .forward(80)
                         .build()),
+                new PivotCommand(pivot, Math.toRadians(0)),
                 new FeederAutoCommand(feeder, 0)
 
         );
