@@ -2,34 +2,66 @@ package org.firstinspires.ftc.teamcode.subsystems;
 
 import androidx.annotation.NonNull;
 
+import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.control.PIDCoefficients;
+
+import com.acmerobotics.roadrunner.control.PIDFController;
 import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.SubsystemBase;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 
+@Config
 public class DriveSubsystem extends SubsystemBase {
     private final MecanumDrive drive;
+    private final PIDFController kPID;
+    public static PIDCoefficients turnController = new PIDCoefficients(1.5, 0, 0);
+
+    private Pose2d desiredDrivePower = new Pose2d(0, 0, 0);
+
+    private double desiredHeading = 0;
+
+    public static double omegaSpeed = 0.5;
     private final Telemetry telemetry;
 
     public DriveSubsystem(@NonNull HardwareMap hardwareMap, @NonNull Telemetry telemetry) {
         drive = new MecanumDrive(hardwareMap);
+        kPID = new PIDFController(turnController);
+        kPID.setInputBounds(0, 2 * Math.PI);
         this.telemetry = telemetry;
     }
 
     @Override
     public void periodic() {
-        if (!drive.getWheelPositions().contains(null)) {
-            telemetry.addLine("Drivetrain")
-                    .addData("Left Front", drive.getWheelVelocities().get(0))
-                    .addData("Left Rear", drive.getWheelVelocities().get(1))
-                    .addData("Right Front", drive.getWheelVelocities().get(2))
-                    .addData("Right Rear", drive.getWheelVelocities().get(3));
-        }
+        drive.setWeightedDrivePower(new Pose2d(desiredDrivePower.getX(), desiredDrivePower.getY(), calculatePID()));
+
+        telemetry.addLine("Drivetrain")
+                .addData("\nCurrent Heading:", getHeading())
+                .addData("\nDesired Heading:", desiredHeading)
+                .addData("\nTurn Power", calculatePID());
+
     }
 
     public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
-        drive.setWeightedDrivePower(drivePower);
+        if (Math.abs(drivePower.getHeading()) > 0.1) {
+            setHeading((getHeading() + Math.pow(drivePower.getHeading(), 3) * omegaSpeed));
+        }
+        desiredDrivePower = drivePower;
+    }
+
+    public void setHeading(double heading) {
+        desiredHeading = heading;
+    }
+
+    public double getHeading() {
+        return drive.getExternalHeading();
+    }
+
+    public double calculatePID() {
+        kPID.setTargetPosition(desiredHeading);
+        return kPID.update(getHeading());
     }
 }
