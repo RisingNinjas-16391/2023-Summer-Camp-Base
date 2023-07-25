@@ -64,4 +64,12 @@ public class DriveSubsystem extends SubsystemBase {
         kPID.setTargetPosition(desiredHeading);
         return kPID.update(getHeading());
     }
+
+    public boolean isFinished() {
+        if ((desiredHeading - getHeading()) < 0.2) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
