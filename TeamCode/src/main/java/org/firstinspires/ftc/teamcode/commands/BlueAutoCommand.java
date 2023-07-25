@@ -14,37 +14,12 @@ public class BlueAutoCommand extends SequentialCommandGroup {
     public BlueAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
 
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-            new PivotCommand(pivot, Math.toRadians(0)),
-            new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                .forward(12)
-                    .build()),
-            new PivotCommand(pivot, Math.toRadians(-50)),
-            new FeederCommand(feeder, -1),
-            new WaitCommand(500),
-            new FeederCommand(feeder, 0),
-            new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                .back(13)
-                .turn(Math.toRadians(180))
-                .forward(40)
-                .build()),
-            new PivotCommand(pivot, Math.toRadians(-100)),
-            new FeederCommand(feeder, 1),
-            new WaitCommand(500),
-            new FeederCommand(feeder, 0),
-            new PivotCommand(pivot, Math.toRadians(-50)),
-            new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                .back(13)
-                .turn(Math.toRadians(180))
-                .forward(40)
-                .build()),
-            new FeederCommand(feeder, -1),
-            new WaitCommand(500),
-            new FeederCommand(feeder, 0),
-            new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                .back(40)
-                .strafeRight(63)
-                .forward(65)
-                .build())
+                new PivotCommand(pivot, Math.toRadians(-30)),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                        .forward(10)
+                        .build()),
+                new PivotCommand(pivot, Math.toRadians(-30)),
+                new FeederAutoCommand(feeder, () -> 1)
         );
 
         addCommands(

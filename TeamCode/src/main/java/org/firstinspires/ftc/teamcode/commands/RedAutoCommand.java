@@ -55,7 +55,13 @@ public class RedAutoCommand extends SequentialCommandGroup {
                     new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                             .forward(25)
                             .build())
-                )
+                ),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                        .forward(-10)
+                        .back(-10)
+                        .strafeRight(-10)
+                        .strafeLeft(-10)
+                        .build())
         );
 
         addCommands(
