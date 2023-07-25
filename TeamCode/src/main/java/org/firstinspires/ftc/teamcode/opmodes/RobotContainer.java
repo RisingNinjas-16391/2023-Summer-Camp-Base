@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.commands.BlueAutoCommand;
+import org.firstinspires.ftc.teamcode.commands.BlueThreeConeAutoCommand;
 import org.firstinspires.ftc.teamcode.commands.PivotPowerCommand;
 import org.firstinspires.ftc.teamcode.commands.RedAutoCommand;
 import org.firstinspires.ftc.teamcode.commands.FeederCommand;
@@ -78,14 +79,14 @@ public class RobotContainer {
     }
 
     public void configureButtonBindings(){
-        zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(100)));
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(45)));
-        travelPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-30)));
+        zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(115)));
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(42)));
+        travelPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(60)));
 
         scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
 
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.5).perpetually())
-                .whenReleased(new FeederCommand(feederSubsystem, () -> 0.25).perpetually());
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0.3).perpetually());
         outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.25).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
     }
@@ -93,6 +94,7 @@ public class RobotContainer {
     private void setAutoCommands(int chooser, Telemetry telemetry) {
         Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem);
         Command RedAutoCommand = new RedAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem);
+        Command BlueThreeConeAutoCommand = new BlueThreeConeAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem);
 
         switch (chooser) {
             case 0:
@@ -100,6 +102,9 @@ public class RobotContainer {
                 break;
             case 1:
                 RedAutoCommand.schedule();
+                break;
+            case 2:
+                BlueThreeConeAutoCommand.schedule();
                 break;
         }
     }

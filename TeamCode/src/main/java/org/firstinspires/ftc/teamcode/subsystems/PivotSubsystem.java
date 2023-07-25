@@ -28,10 +28,10 @@ public class PivotSubsystem extends SubsystemBase {
     private double desiredAngle = Math.toRadians(90);
 
     //TODO: Tune for arm, if the arm goes up without doing anything lower, if it falls then increase it
-    public static double kG = 0.3;
+    public static double kG = 0.18;
 
     //TODO: Replace with starting angle offset
-    public static double angleOffset = 110;
+    public static double angleOffset = 125;
 
     public static double tolerance = 0.2;
 
@@ -79,6 +79,8 @@ public class PivotSubsystem extends SubsystemBase {
                 .addData("\nDesired Pivot Angle Degrees", Math.toDegrees(desiredAngle))
                 .addData("\nPivot Power", calculatePID())
                 .addData("\nAt Setpoint", atSetpoint());
+
+        telemetry.update();
 
     }
 
