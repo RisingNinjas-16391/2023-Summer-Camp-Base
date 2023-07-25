@@ -13,42 +13,12 @@ public class BlueAutoCommand extends SequentialCommandGroup {
 
     public BlueAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-                new PivotCommand(pivot, Math.toRadians(0)),
-                new WaitCommand(1500),
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .forward(18)
+                new PivotCommand(pivot, Math.toRadians(-30)),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                        .forward(10)
                         .build()),
-
-
-                new PivotCommand(pivot, Math.toRadians(67)),
-                new WaitCommand(2000),
-
-                new FeederAutoCommand(feeder, 0.7),
-                new WaitCommand(1000),
-                new FeederAutoCommand(feeder,0),
-
-
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                            .back(49)
-                        .build()),
-
-                new PivotCommand(pivot, Math.toRadians(0)),
-
-                new FollowTrajectoryCommand(drive, ()->drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .strafeRight(72)
-                        .forward(45)
-                        .build()),
-
-                new PivotCommand(pivot, Math.toRadians(120)),
-
-                new FollowTrajectoryCommand(drive, ()->drive.trajectorySequenceBuilder(drive.getPoseEstimate())
-                        .forward(45)
-                        .build()),
-
-                new FeederAutoCommand(feeder, -0.8),
-                new WaitCommand(1000),
-                new FeederAutoCommand(feeder,0)
-
+                new PivotCommand(pivot, Math.toRadians(-30)),
+                new FeederAutoCommand(feeder, () -> 1)
         );
 
         addCommands(
