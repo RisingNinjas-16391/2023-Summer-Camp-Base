@@ -33,14 +33,15 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                         .build()),
                 new FeederAutoCommand(feeder,.5),
                 new WaitCommand(750),
-                new PivotCommand(pivot, Math.toRadians(25)),
+                new PivotCommand(pivot, Math.toRadians(33)),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(new Pose2d(-45,20, Math.toRadians(180)))
                         .back(15)
                         .turn(Math.toRadians(180))
-                        .strafeRight( 17)
-                        .forward(40)
+                        .strafeRight( 21)
+                        .forward(48)
                         .build()),
-                new FeederAutoCommand(feeder,-.25),
+                new FeederAutoCommand(feeder,-.5),
+                new WaitCommand(750),
 
 
 
@@ -53,7 +54,7 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                 new PivotCommand(pivot, Math.toRadians(0)),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(new Pose2d(-30,0, Math.toRadians(0)))
                         .strafeRight(71)
-                        .forward(65)
+                        .forward(60)
                         .build())
         );
 
