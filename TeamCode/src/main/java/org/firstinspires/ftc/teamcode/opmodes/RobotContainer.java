@@ -15,6 +15,7 @@ import org.firstinspires.ftc.teamcode.commands.FeederCommand;
 import org.firstinspires.ftc.teamcode.commands.PivotCommand;
 import org.firstinspires.ftc.teamcode.commands.ScoreCommand;
 import org.firstinspires.ftc.teamcode.commands.TeleOpDriveCommand;
+import org.firstinspires.ftc.teamcode.commands.TeleOpHeadingCommand;
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.subsystems.DriveSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.FeederSubsystem;
@@ -28,8 +29,8 @@ public class RobotContainer {
 
     private final GamepadEx driverController;
 
-    private final GamepadButton zeroPos;
-    private final GamepadButton scorePos;
+    private final GamepadButton forwardPos;
+    private final GamepadButton backPos;
     private final GamepadButton travelPos;
     private final GamepadButton scoreButton;
     private final GamepadButton intake;
@@ -43,8 +44,8 @@ public class RobotContainer {
 
         driverController = new GamepadEx(gamepad1);
 
-        zeroPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_DOWN);
-        scorePos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_UP);
+        forwardPos = new GamepadButton(driverController, GamepadKeys.Button.A);
+        backPos = new GamepadButton(driverController, GamepadKeys.Button.X);
         travelPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_LEFT);
 
         scoreButton = new GamepadButton(driverController, GamepadKeys.Button.A);
@@ -62,8 +63,8 @@ public class RobotContainer {
         feederSubsystem = new FeederSubsystem(hwMap);
 
         driverController = null;
-        zeroPos = null;
-        scorePos = null;
+        forwardPos = null;
+        backPos = null;
         travelPos = null;
         scoreButton = null;
         intake = null;
@@ -78,8 +79,8 @@ public class RobotContainer {
     }
 
     public void configureButtonBindings(){
-        zeroPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(100)));
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(45)));
+        forwardPos.whenPressed(new TeleOpHeadingCommand(driveSubsystem, () -> 0));
+        backPos.whenPressed(new TeleOpHeadingCommand(driveSubsystem, () -> 180));
         travelPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-30)));
 
         scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
