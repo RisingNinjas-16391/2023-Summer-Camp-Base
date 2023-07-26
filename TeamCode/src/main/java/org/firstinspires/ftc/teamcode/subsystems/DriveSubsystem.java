@@ -13,6 +13,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
+import org.firstinspires.ftc.teamcode.helpers.SlewRateLimiter;
 
 @Config
 public class DriveSubsystem extends SubsystemBase {
@@ -47,7 +48,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
         if (Math.abs(drivePower.getHeading()) > 0.1) {
-            setHeading((getHeading() + Math.pow(drivePower.getHeading(), 3) * omegaSpeed));
+            setHeading((getHeading() + (drivePower.getHeading()) * omegaSpeed));
         }
         desiredDrivePower = drivePower;
     }
