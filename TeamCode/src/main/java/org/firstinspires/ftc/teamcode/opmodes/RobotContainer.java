@@ -24,31 +24,28 @@ import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
 public class RobotContainer {
     private DriveSubsystem driveSubsystem;
     private MecanumDrive mecanumDrive;
-    private final PivotSubsystem pivotSubsystem;
     private final FeederSubsystem feederSubsystem;
 
     private final GamepadEx driverController;
 
     private final GamepadButton forwardPos;
     private final GamepadButton backPos;
-    private final GamepadButton travelPos;
-    private final GamepadButton scoreButton;
+    private final GamepadButton leftPos;
+    private final GamepadButton rightPos;
+
     private final GamepadButton intake;
     private final GamepadButton outtake;
 
     public RobotContainer(HardwareMap hwMap, Gamepad gamepad1, Telemetry telemetry){
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
-
-        pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
         feederSubsystem = new FeederSubsystem(hwMap);
 
         driverController = new GamepadEx(gamepad1);
 
-        forwardPos = new GamepadButton(driverController, GamepadKeys.Button.A);
-        backPos = new GamepadButton(driverController, GamepadKeys.Button.X);
-        travelPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_LEFT);
-
-        scoreButton = new GamepadButton(driverController, GamepadKeys.Button.A);
+        forwardPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_UP);
+        backPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_DOWN);
+        leftPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_LEFT);
+        rightPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_RIGHT);
 
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
         outtake = new GamepadButton(driverController, GamepadKeys.Button.LEFT_BUMPER);
@@ -59,14 +56,14 @@ public class RobotContainer {
 
     public RobotContainer(HardwareMap hwMap, int autoNum, Telemetry telemetry) {
         mecanumDrive = new MecanumDrive(hwMap);
-        pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
         feederSubsystem = new FeederSubsystem(hwMap);
 
         driverController = null;
         forwardPos = null;
         backPos = null;
-        travelPos = null;
-        scoreButton = null;
+        leftPos = null;
+        rightPos = null;
+
         intake = null;
         outtake = null;
 
@@ -75,15 +72,14 @@ public class RobotContainer {
 
     public void setDefaultCommands(){
         driveSubsystem.setDefaultCommand(new TeleOpDriveCommand(driveSubsystem, driverController::getLeftY, driverController::getLeftX, driverController::getRightX));
-        pivotSubsystem.setDefaultCommand(new PivotPowerCommand(pivotSubsystem, () -> (driverController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))));
     }
 
     public void configureButtonBindings(){
         forwardPos.whenPressed(new TeleOpHeadingCommand(driveSubsystem, () -> 0));
         backPos.whenPressed(new TeleOpHeadingCommand(driveSubsystem, () -> 180));
-        travelPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(-30)));
+        leftPos.whenPressed(new TeleOpHeadingCommand(driveSubsystem, () -> 90));
+        rightPos.whenPressed(new TeleOpHeadingCommand(driveSubsystem, () -> 270));
 
-        scoreButton.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem));
 
         intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
@@ -92,8 +88,8 @@ public class RobotContainer {
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
-        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem);
-        Command RedAutoCommand = new RedAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem);
+        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, feederSubsystem);
+        Command RedAutoCommand = new RedAutoCommand(mecanumDrive, feederSubsystem);
 
         switch (chooser) {
             case 0:
