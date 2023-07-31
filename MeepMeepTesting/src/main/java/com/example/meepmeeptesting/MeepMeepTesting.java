@@ -18,7 +18,8 @@ public class MeepMeepTesting {
                                 .strafeRight(10)
                                 .back(48.5)
                                 .waitSeconds(1.5)
-
+                                .forward(48.5)
+                                .strafeLeft(10)
                                 .build()
                 );
 
