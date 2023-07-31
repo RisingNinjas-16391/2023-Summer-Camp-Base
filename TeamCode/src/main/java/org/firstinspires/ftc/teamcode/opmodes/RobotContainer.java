@@ -35,7 +35,7 @@ public class RobotContainer {
     public RobotContainer(HardwareMap hwMap, Gamepad gamepad1, Telemetry telemetry){
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
         feederSubsystem = new FeederSubsystem(hwMap);
-        shooterSubsystem = new ShooterSubsystem(hwMap);
+        shooterSubsystem = new ShooterSubsystem(hwMap, telemetry);
 
         driverController = new GamepadEx(gamepad1);
 
@@ -49,7 +49,7 @@ public class RobotContainer {
     public RobotContainer(HardwareMap hwMap, int autoNum, Telemetry telemetry) {
         mecanumDrive = new MecanumDrive(hwMap);
         feederSubsystem = new FeederSubsystem(hwMap);
-        shooterSubsystem = new ShooterSubsystem(hwMap);
+        shooterSubsystem = new ShooterSubsystem(hwMap, telemetry);
 
         driverController = null;
         intake = null;
@@ -68,7 +68,7 @@ public class RobotContainer {
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
-        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, feederSubsystem);
+        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, shooterSubsystem, feederSubsystem);
         Command RedAutoCommand = new RedAutoCommand(mecanumDrive, feederSubsystem);
 
         switch (chooser) {
