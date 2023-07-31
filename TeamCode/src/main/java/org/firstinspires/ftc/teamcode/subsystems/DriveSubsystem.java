@@ -24,6 +24,7 @@ public class DriveSubsystem extends SubsystemBase {
     private Pose2d desiredDrivePower = new Pose2d(0, 0, 0);
 
     private double desiredHeading = 0;
+    private boolean flipped = false;
 
     private double desiredX;
 
@@ -49,10 +50,14 @@ public class DriveSubsystem extends SubsystemBase {
     }
 
     public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
+        if (flipped) {
+            desiredDrivePower = new Pose2d(-drivePower.getX(), -drivePower.getY(), -drivePower.getHeading());
+        } else {
+            desiredDrivePower = drivePower;
+        }
         if (Math.abs(drivePower.getHeading()) > 0.1) {
             setHeading((getHeading() + (drivePower.getHeading()) * omegaSpeed));
         }
-        desiredDrivePower = drivePower;
     }
 
     public void setHeading(double heading) {
@@ -61,6 +66,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     public double getHeading() {
         return drive.getExternalHeading();
+    }
+    public void reverseDrivetrain() {
+        flipped = !flipped;
     }
 
     public double calculatePID() {
