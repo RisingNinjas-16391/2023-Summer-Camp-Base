@@ -6,23 +6,29 @@ import org.firstinspires.ftc.teamcode.subsystems.FeederSubsystem;
 
 import java.util.function.DoubleSupplier;
 
-public class FeederCommand extends CommandBase {
+public class ShooterAutoCommand extends CommandBase {
     private final FeederSubsystem feederSubsystem;
     private final DoubleSupplier power;
 
-    public FeederCommand(final FeederSubsystem feeder, final DoubleSupplier power) {
+    public ShooterAutoCommand(final FeederSubsystem feeder, final DoubleSupplier power) {
         feederSubsystem = feeder;
         this.power = power;
 
         addRequirements(feederSubsystem);
     }
 
-    public FeederCommand(final FeederSubsystem feeder, final double powerDouble) {
-        this(feeder, () -> powerDouble);
+    public ShooterAutoCommand(final FeederSubsystem feeder, final double power) {
+        this(feeder, () -> power);
     }
 
     @Override
     public void execute() {
         feederSubsystem.setPower(power.getAsDouble());
     }
+
+    @Override
+    public boolean isFinished() {
+        return !feederSubsystem.isBusy();
+    }
 }
+

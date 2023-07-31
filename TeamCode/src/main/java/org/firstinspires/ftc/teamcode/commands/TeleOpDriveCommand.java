@@ -10,7 +10,6 @@ import java.util.function.DoubleSupplier;
 
 public class TeleOpDriveCommand extends CommandBase {
     private final DriveSubsystem drive;
-
     private final DoubleSupplier x;
     private final DoubleSupplier y;
     private final DoubleSupplier omega;
