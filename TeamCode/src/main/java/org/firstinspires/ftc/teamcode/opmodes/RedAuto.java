@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.roadrunner.geometry.Pose2d;
 import com.arcrobotics.ftclib.command.CommandOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
@@ -11,6 +12,8 @@ public class RedAuto extends CommandOpMode {
     public void initialize(){
         waitForStart();
         new RobotContainer(hardwareMap, 1, telemetry);
+
+
     }
 
 }

@@ -15,10 +15,13 @@ public class BlueAutoCommand extends SequentialCommandGroup {
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
                 new PivotCommand(pivot, Math.toRadians(-30)),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                        .forward(10)
-                        .build()),
-                new PivotCommand(pivot, Math.toRadians(-30)),
-                new FeederAutoCommand(feeder, () -> 1)
+                        .waitSeconds(2)
+                        .back(18)
+                        .waitSeconds(1)
+                        .forward(18)
+                        .strafeLeft(15)
+                        .back(100)
+                        .build())
         );
 
         addCommands(
