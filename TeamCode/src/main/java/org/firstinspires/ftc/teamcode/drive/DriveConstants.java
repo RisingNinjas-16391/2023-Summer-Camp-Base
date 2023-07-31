@@ -38,7 +38,7 @@ public class DriveConstants {
     public static final RevHubOrientationOnRobot.LogoFacingDirection LOGO_FACING_DIR = RevHubOrientationOnRobot.LogoFacingDirection.UP;
     public static final RevHubOrientationOnRobot.UsbFacingDirection USB_FACING_DIR = RevHubOrientationOnRobot.UsbFacingDirection.RIGHT;
 
-    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(15, 0, 3,
+    public static PIDFCoefficients MOTOR_VELO_PID = new PIDFCoefficients(30, 0, 10,
             13);
 
     /*
@@ -59,9 +59,9 @@ public class DriveConstants {
      * motor encoders or have elected not to use them for velocity control, these values should be
      * empirically tuned.
      */
-    public static double kV = 1.0 / rpmToVelocity(MAX_RPM);
-    public static double kA = 0;
-    public static double kStatic = 0;
+    public static double kV = 0.0155;
+    public static double kA = 0.001;
+    public static double kStatic = 0.02460;
 
     /*
      * These values are used to generate the trajectories for you robot. To ensure proper operation,
@@ -91,8 +91,8 @@ public class DriveConstants {
      * You are free to raise this on your own if you would like. It is best determined through experimentation.
 
      */
-    public static double MAX_VEL = 30;
-    public static double MAX_ACCEL = 30;
+    public static double MAX_VEL = 50;
+    public static double MAX_ACCEL = 50;
     public static double MAX_ANG_VEL = Math.toRadians(184.02607784577722);
     public static double MAX_ANG_ACCEL = Math.toRadians(184.02607784577722);
 
