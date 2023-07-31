@@ -13,12 +13,20 @@ public class BlueAutoCommand extends SequentialCommandGroup {
 
     public BlueAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-                new PivotCommand(pivot, Math.toRadians(-30)),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                        .forward(10)
-                        .build()),
-                new PivotCommand(pivot, Math.toRadians(-30)),
-                new FeederAutoCommand(feeder, () -> 1)
+
+                        .strafeRight(3)
+                        .forward(35)
+                        //launch ball here
+                        .strafeLeft(3)
+                        .back(35)
+
+
+
+
+                        .back(85)
+
+                        .build())
         );
 
         addCommands(
