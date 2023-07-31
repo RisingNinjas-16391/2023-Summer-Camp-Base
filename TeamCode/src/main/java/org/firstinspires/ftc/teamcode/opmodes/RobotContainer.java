@@ -71,7 +71,7 @@ public class RobotContainer {
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
-        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, feederSubsystem);
+        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, shooterSubsystem, feederSubsystem);
         Command RedAutoCommand = new RedAutoCommand(mecanumDrive, feederSubsystem);
 
         switch (chooser) {
