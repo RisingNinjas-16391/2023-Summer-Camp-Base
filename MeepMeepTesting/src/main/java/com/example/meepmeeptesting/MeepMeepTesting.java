@@ -14,8 +14,6 @@ public class MeepMeepTesting {
                 .setConstraints(60, 60, Math.toRadians(180), Math.toRadians(180), 15)
                 .followTrajectorySequence(drive ->
                         drive.trajectorySequenceBuilder(new Pose2d(0, 0, 0))
-
-
                                 .strafeRight(20)
                                 .forward(60)
                                 .strafeLeft(20)
