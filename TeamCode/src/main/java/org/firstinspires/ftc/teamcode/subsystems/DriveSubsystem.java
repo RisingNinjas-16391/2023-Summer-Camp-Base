@@ -51,7 +51,7 @@ public class DriveSubsystem extends SubsystemBase {
 
     public void setWeightedDrivePower(@NonNull Pose2d drivePower) {
         if (flipped) {
-            desiredDrivePower = new Pose2d(-drivePower.getX(), -drivePower.getY(), -drivePower.getHeading());
+            desiredDrivePower = new Pose2d(-drivePower.getX(), -drivePower.getY(), drivePower.getHeading());
         } else {
             desiredDrivePower = drivePower;
         }
