@@ -8,16 +8,23 @@ import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.helpers.TrajectorySequenceSupplier;
 import org.firstinspires.ftc.teamcode.subsystems.FeederSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 public class BlueAutoCommand extends SequentialCommandGroup {
 
-    public BlueAutoCommand(MecanumDrive drive, FeederSubsystem feeder) {
+    public BlueAutoCommand(MecanumDrive drive, ShooterSubsystem shooter, FeederSubsystem feeder) {
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                        .forward(10)
-                        .build()),
-                new FeederAutoCommand(feeder, () -> 1)
+                        .strafeRight(16)
+                        .forward(48.5)
+                        .waitSeconds(1.5)
+                        .back(44)
+                        .strafeLeft(16)
+                        .strafeRight(16)
+                        .forward(135)
+                        .build())
         );
+
 
         addCommands(
                 autoBlue

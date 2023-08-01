@@ -3,32 +3,33 @@ package org.firstinspires.ftc.teamcode.commands;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.FeederSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 import java.util.function.DoubleSupplier;
 
 public class ShooterAutoCommand extends CommandBase {
-    private final FeederSubsystem feederSubsystem;
+    private final ShooterSubsystem shooterSubsystem;
     private final DoubleSupplier power;
 
-    public ShooterAutoCommand(final FeederSubsystem feeder, final DoubleSupplier power) {
-        feederSubsystem = feeder;
-        this.power = power;
+    public ShooterAutoCommand(final ShooterSubsystem shooter, final DoubleSupplier RPM) {
+        shooterSubsystem = shooter;
+        this.power = RPM;
 
-        addRequirements(feederSubsystem);
+        addRequirements(shooterSubsystem);
     }
 
-    public ShooterAutoCommand(final FeederSubsystem feeder, final double power) {
-        this(feeder, () -> power);
+    public ShooterAutoCommand(final ShooterSubsystem shooter, final double RPM) {
+        this(shooter, () -> RPM);
     }
 
     @Override
     public void execute() {
-        feederSubsystem.setPower(power.getAsDouble());
+        shooterSubsystem.setRPM(power.getAsDouble());
     }
 
     @Override
     public boolean isFinished() {
-        return !feederSubsystem.isBusy();
+        return shooterSubsystem.atSetpoint();
     }
 }
 
