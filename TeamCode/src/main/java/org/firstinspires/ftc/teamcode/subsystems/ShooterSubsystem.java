@@ -19,6 +19,7 @@ public class ShooterSubsystem extends SubsystemBase {
     private static final double gearRatio = 1;
     private final PIDFController kShooterController = new PIDFController(0.08, 0, 0, 0);
     private double desiredRPM = 0;
+    private double desiredPower = 0;
 
     public ShooterSubsystem(@NonNull HardwareMap hwMap, @NonNull Telemetry telemetry){
         this.telemetry = telemetry;
@@ -29,12 +30,12 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        setPower(calculatePID());
+        setPower(desiredPower);
 
         telemetry.addLine("Shooter")
                 .addData("\nCurrent RPM:", getRPM())
                 .addData("\nDesired RPM:", desiredRPM)
-                .addData("\nPower", calculatePID())
+                .addData("\nPower", desiredPower)
                 .addData("\nIs Finished: ", shooter.isBusy())
                 .addData("\nAmperage", shooter.getCurrent(CurrentUnit.AMPS));
 
@@ -49,11 +50,12 @@ public class ShooterSubsystem extends SubsystemBase {
         return shooter.getVelocity(AngleUnit.RADIANS) * (60.0 / (2 * Math.PI)) * gearRatio;
     }
 
-    public double calculatePID() {
-        return kShooterController.calculate(getRPM(), desiredRPM);
+    public void calculatePID() {
+        desiredPower = kShooterController.calculate(getRPM(), desiredRPM);
     }
     public void setPower(double power){
-        shooter.setPower(power);
+        desiredPower = power;
+        shooter.setPower(desiredPower);
     }
 
     public double getPower(){

@@ -11,20 +11,20 @@ public class ShooterAutoCommand extends CommandBase {
     private final ShooterSubsystem shooterSubsystem;
     private final DoubleSupplier power;
 
-    public ShooterAutoCommand(final ShooterSubsystem shooter, final DoubleSupplier RPM) {
+    public ShooterAutoCommand(final ShooterSubsystem shooter, final DoubleSupplier power) {
         shooterSubsystem = shooter;
-        this.power = RPM;
+        this.power = power;
 
         addRequirements(shooterSubsystem);
     }
 
-    public ShooterAutoCommand(final ShooterSubsystem shooter, final double RPM) {
-        this(shooter, () -> RPM);
+    public ShooterAutoCommand(final ShooterSubsystem shooter, final double power) {
+        this(shooter, () -> power);
     }
 
     @Override
     public void execute() {
-        shooterSubsystem.setRPM(power.getAsDouble());
+        shooterSubsystem.setPower(power.getAsDouble());
     }
 
     @Override
