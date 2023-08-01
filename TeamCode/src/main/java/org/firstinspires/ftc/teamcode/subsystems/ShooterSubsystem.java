@@ -29,7 +29,7 @@ public class ShooterSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        //setPower(calculatePID());
+        setPower(calculatePID());
 
         telemetry.addLine("Shooter")
                 .addData("\nCurrent RPM:", getRPM())
