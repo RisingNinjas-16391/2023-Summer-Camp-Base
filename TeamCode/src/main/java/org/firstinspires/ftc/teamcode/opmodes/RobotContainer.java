@@ -64,7 +64,10 @@ public class RobotContainer {
     }
 
     public void configureButtonBindings(){
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually());
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 1).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -1).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
         shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, () -> driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
     }
 
