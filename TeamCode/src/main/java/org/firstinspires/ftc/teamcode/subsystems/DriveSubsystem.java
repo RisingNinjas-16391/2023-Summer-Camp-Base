@@ -19,7 +19,7 @@ import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 public class DriveSubsystem extends SubsystemBase {
     private final MecanumDrive drive;
     private final PIDFController kHeadingPID;
-    public static PIDCoefficients turnController = new PIDCoefficients(1.5, 0, 0);
+    public static PIDCoefficients turnController = new PIDCoefficients(1.5, 0.5, 0);
 
     private Pose2d desiredDrivePower = new Pose2d(0, 0, 0);
 

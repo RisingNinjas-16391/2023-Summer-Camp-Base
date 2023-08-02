@@ -18,7 +18,7 @@ public class FeederAutoCommand extends CommandBase {
     }
 
     public FeederAutoCommand(final FeederSubsystem feeder, final double power) {
-        this(feeder, () -> power);
+        this(feeder, ()-> power);
     }
 
     @Override

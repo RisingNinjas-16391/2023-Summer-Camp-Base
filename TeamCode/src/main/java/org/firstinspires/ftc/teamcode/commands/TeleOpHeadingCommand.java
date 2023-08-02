@@ -21,6 +21,10 @@ public class TeleOpHeadingCommand extends CommandBase {
     }
 
     @Override
+    public void initialize() {
+        drive.setHeading(drive.getHeading());
+    }
+    @Override
     public void execute() {
         drive.setHeading(Math.toRadians(angle.getAsDouble()));
     }

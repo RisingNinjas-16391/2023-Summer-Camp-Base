@@ -12,7 +12,7 @@ import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 public class RedAutoCommand extends SequentialCommandGroup {
 
-    public RedAutoCommand(MecanumDrive drive, FeederSubsystem feeder, ShooterSubsystem shooter) {
+    public RedAutoCommand(MecanumDrive drive, ShooterSubsystem shooter, FeederSubsystem feeder) {
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
                 new ShooterAutoCommand(shooter, -1),
@@ -24,7 +24,16 @@ public class RedAutoCommand extends SequentialCommandGroup {
                         .forward(20)
                         .build()),
                 new FeederCommand(feeder,0),
-                new ShooterAutoCommand(shooter, 0)
+                new ShooterAutoCommand(shooter, 0),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(new Pose2d())
+                        .strafeLeft(16)
+                        .forward(48.5)
+                        .waitSeconds(1.5)
+                        .back(45)
+                        .strafeRight(16)
+                        .strafeLeft(16)
+                        .forward(132)
+                        .build())
         );
 
         addCommands(
