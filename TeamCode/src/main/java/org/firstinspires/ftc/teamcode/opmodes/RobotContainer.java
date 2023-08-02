@@ -65,18 +65,11 @@ public class RobotContainer {
     }
 
     public void configureButtonBindings(){
-<<<<<<< HEAD
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
-                .whenReleased(new FeederCommand(feederSubsystem, () -> 0.3).perpetually());
-        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.25).perpetually())
-                .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
-=======
         intake.whileHeld(new FeederCommand(feederSubsystem, () -> 1).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
         outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -1).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
         shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, () -> driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
->>>>>>> 7fac26325a2938f050b6dac0f0dd11b9f2c80742
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
