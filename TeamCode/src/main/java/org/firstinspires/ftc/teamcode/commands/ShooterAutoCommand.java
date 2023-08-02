@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode.commands;
 import com.arcrobotics.ftclib.command.CommandBase;
 
 import org.firstinspires.ftc.teamcode.subsystems.FeederSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 import java.util.function.DoubleSupplier;
 
@@ -17,7 +18,7 @@ public class ShooterAutoCommand extends CommandBase {
         addRequirements(feederSubsystem);
     }
 
-    public ShooterAutoCommand(final FeederSubsystem feeder, final double power) {
+    public ShooterAutoCommand(final ShooterSubsystem feeder, final double power) {
         this(feeder, () -> power);
     }
 
