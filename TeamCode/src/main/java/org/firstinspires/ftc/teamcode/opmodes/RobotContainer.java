@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -36,7 +37,7 @@ public class RobotContainer {
     public RobotContainer(HardwareMap hwMap, Gamepad gamepad1, Telemetry telemetry){
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
         feederSubsystem = new FeederSubsystem(hwMap);
-        shooterSubsystem = new ShooterSubsystem(hwMap);
+        shooterSubsystem = new ShooterSubsystem(hwMap, telemetry);
 
         driverController = new GamepadEx(gamepad1);
 
@@ -50,7 +51,7 @@ public class RobotContainer {
     public RobotContainer(HardwareMap hwMap, int autoNum, Telemetry telemetry) {
         mecanumDrive = new MecanumDrive(hwMap);
         feederSubsystem = new FeederSubsystem(hwMap);
-        shooterSubsystem = new ShooterSubsystem(hwMap);
+        shooterSubsystem = new ShooterSubsystem(hwMap, telemetry);
 
         driverController = null;
         intake = null;
@@ -64,14 +65,22 @@ public class RobotContainer {
     }
 
     public void configureButtonBindings(){
+<<<<<<< HEAD
         intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0.3).perpetually());
         outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.25).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0).perpetually());
+=======
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 1).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -1).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
+        shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, () -> driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
+>>>>>>> 7fac26325a2938f050b6dac0f0dd11b9f2c80742
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
-        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, feederSubsystem);
+        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, shooterSubsystem, feederSubsystem);
         Command RedAutoCommand = new RedAutoCommand(mecanumDrive, feederSubsystem);
         switch (chooser) {
             case 0:

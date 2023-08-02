@@ -15,12 +15,22 @@ public class RedAutoCommand extends SequentialCommandGroup {
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+<<<<<<< HEAD
                         .strafeLeft(3)
                         .forward(35)
                         //launch ball here
                         .strafeRight(3)
                         .back(35)
                         .back(85)
+=======
+                        .strafeLeft(16)
+                        .forward(48.5)
+                        .waitSeconds(1.5)
+                        .back(45)
+                        .strafeRight(16)
+                        .strafeLeft(16)
+                        .forward(132)
+>>>>>>> 7fac26325a2938f050b6dac0f0dd11b9f2c80742
                         .build())
         );
 
