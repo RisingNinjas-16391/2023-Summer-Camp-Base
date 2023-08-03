@@ -18,6 +18,7 @@ public class RedAutoCommand extends SequentialCommandGroup {
                 new FeederAutoCommand(feeder, 1),
                 new ShooterAutoCommand(shooter, 1),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+<<<<<<< HEAD
                     .forward(47)
                         .build()),
                 new FeederAutoCommand(feeder,0),
@@ -33,6 +34,21 @@ public class RedAutoCommand extends SequentialCommandGroup {
                     .build())
         );
 
+=======
+                        .forward(-45)
+                        .waitSeconds(1)
+                        .forward(45)
+                        .waitSeconds(1).forward(-45)
+                        .waitSeconds(1)
+                        .forward(45)
+                        .waitSeconds(1)
+                        .strafeRight(6)
+                        .waitSeconds(1)
+                        .forward(-135)
+                        .waitSeconds(1)
+                        .build())
+        );
+>>>>>>> a585cb708fa245033eace4f6efd9364344af633a
 
         addCommands(
                 autoRed
