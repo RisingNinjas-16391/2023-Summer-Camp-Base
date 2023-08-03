@@ -40,7 +40,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        drive.setWeightedDrivePower(new Pose2d(desiredDrivePower.getX(), desiredDrivePower.getY(), calculatePID()));
+        //drive.setWeightedDrivePower(new Pose2d(desiredDrivePower.getX(), desiredDrivePower.getY(), calculatePID()));
+
+        drive.setWeightedDrivePower(desiredDrivePower);
 
         telemetry.addLine("Drivetrain")
                 .addData("\nCurrent Heading:", getHeading())

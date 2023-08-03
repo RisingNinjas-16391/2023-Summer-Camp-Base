@@ -11,23 +11,19 @@ import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
 
 public class BlueAutoCommand extends SequentialCommandGroup {
 
-    public BlueAutoCommand(MecanumDrive drive, FeederSubsystem feeder) {
+    public BlueAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
 
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
+                new PivotCommand(pivot,Math.toRadians(90)),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                        .forward(-45)
-                        .waitSeconds(1)
-                        .forward(45)
-                        .waitSeconds(1).forward(-45)
-                        .waitSeconds(1)
-                        .forward(45)
-                        .waitSeconds(1)
-                        .strafeLeft(6)
-                        .waitSeconds(1)
-                        .forward(-135)
-                        .waitSeconds(1)
-                        .build())
-        );
+                        .strafeRight(5)
+                        .build()),
+                new FeederAutoCommand(feeder,-1),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                        .back(64)
+                        .build()),
+                new FeederAutoCommand(feeder,1)
+    );
 
         addCommands(
                 autoBlue

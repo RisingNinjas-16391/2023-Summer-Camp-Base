@@ -25,20 +25,20 @@ public class PivotSubsystem extends SubsystemBase {
     public static PIDFController kPIDF = new PIDFController(2,0,0,0.2);
 
     //TODO: Replace with preferred starting angle upon initialization
-    private double desiredAngle = Math.toRadians(90);
+    private double desiredAngle = Math.toRadians(0);
 
     //TODO: Tune for arm, if the arm goes up without doing anything lower, if it falls then increase it
-    public static double kG = 0.3;
+    public static double kG = 0.6;
 
     //TODO: Replace with starting angle offset
-    public static double angleOffset = 110;
+    public static double angleOffset = -10;
 
     public static double tolerance = 0.2;
 
     public PivotSubsystem(@NonNull HardwareMap hwMap, @NonNull Telemetry telemetry){
         pivot = hwMap.get(DcMotorEx.class, "pivot");
         pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivot.setDirection(DcMotorSimple.Direction.REVERSE);
+        pivot.setDirection(DcMotorSimple.Direction.FORWARD);
         pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         kPIDF.setTolerance(tolerance);
@@ -59,7 +59,7 @@ public class PivotSubsystem extends SubsystemBase {
     }
 
     public double calculatePID() {
-        return kPIDF.calculate(getAngle(), desiredAngle) - Math.sin(getAngle()) * kG;
+        return kPIDF.calculate(getAngle(), desiredAngle) + Math.cos(getAngle()) * kG;
     }
 
     public boolean atSetpoint() {
