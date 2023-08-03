@@ -10,6 +10,7 @@ public class BlueAuto extends CommandOpMode {
 
     public void initialize(){
         waitForStart();
+
         new RobotContainer(hardwareMap, 0, telemetry);
     }
 

@@ -12,13 +12,11 @@ import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 public class RedAutoCommand extends SequentialCommandGroup {
 
-    public RedAutoCommand(MecanumDrive drive, FeederSubsystem feeder, ShooterSubsystem shooter) {
-
+    public RedAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder, ShooterSubsystem shooter) {
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
                 new FeederAutoCommand(feeder, 1),
                 new ShooterAutoCommand(shooter, 1),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-<<<<<<< HEAD
                     .forward(47)
                         .build()),
                 new FeederAutoCommand(feeder,0),
@@ -31,24 +29,47 @@ public class RedAutoCommand extends SequentialCommandGroup {
                     .turn(Math.toRadians(180))
                     .strafeLeft(12)
                     .back(128)
-                    .build())
-        );
+                    .build()),
 
-=======
-                        .forward(-45)
-                        .waitSeconds(1)
-                        .forward(45)
-                        .waitSeconds(1).forward(-45)
-                        .waitSeconds(1)
-                        .forward(45)
-                        .waitSeconds(1)
-                        .strafeRight(6)
-                        .waitSeconds(1)
-                        .forward(-135)
-                        .waitSeconds(1)
-                        .build())
-        );
->>>>>>> a585cb708fa245033eace4f6efd9364344af633a
+                // Pivot to score
+                new PivotCommand(pivot,Math.toRadians(80)),
+                // Drive to scoring point
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((drive.getPoseEstimate()))
+                        .strafeLeft(15)
+                        .build()),
+                // Shoot ball
+                new FeederAutoCommand(feeder,-1),
+                // Group to move arm and move back
+                new ParallelCommandGroup(
+                        new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((drive.getPoseEstimate()))
+                                .strafeRight(15)
+                                .back(64)
+                                .build()),
+                        new PivotCommand(pivot, Math.toRadians(-10))
+                ),
+                // Intake
+                new FeederAutoCommand(feeder,1),
+                // Start driving forward and then raise arm 1sec in
+                new ParallelCommandGroup(
+                        new SequentialCommandGroup(
+                                new WaitCommand(1000),
+                                new PivotCommand(pivot, Math.toRadians(80))
+                        ),
+                        new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((drive.getPoseEstimate()))
+                            .forward(64)
+                            .strafeLeft(15)
+                            .build())),
+                // shoot ball
+                new FeederAutoCommand(feeder, -1),
+                // Wait for ball to shoot
+                new WaitCommand(1000)
+                // Move to park
+//                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((drive.getPoseEstimate()))
+//                        .strafeRight(15)
+//                        .back(95)
+//                        .build())
+
+                );
 
         addCommands(
                 autoRed

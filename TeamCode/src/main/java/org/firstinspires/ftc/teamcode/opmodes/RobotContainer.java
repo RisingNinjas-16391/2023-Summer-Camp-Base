@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.opmodes;
 
 import com.arcrobotics.ftclib.command.Command;
+import com.arcrobotics.ftclib.command.ParallelCommandGroup;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
@@ -28,6 +29,7 @@ public class RobotContainer {
     private DriveSubsystem driveSubsystem;
     private MecanumDrive mecanumDrive;
     private final FeederSubsystem feederSubsystem;
+    private final PivotSubsystem pivotSubsystem;
     private final ShooterSubsystem shooterSubsystem;
     private final GamepadEx driverController;
     private final GamepadButton intake;
@@ -38,16 +40,15 @@ public class RobotContainer {
     public RobotContainer(HardwareMap hwMap, Gamepad gamepad1, Telemetry telemetry){
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
         feederSubsystem = new FeederSubsystem(hwMap);
+        pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
         shooterSubsystem = new ShooterSubsystem(hwMap);
 
         driverController = new GamepadEx(gamepad1);
 
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
         outtake = new GamepadButton(driverController, GamepadKeys.Button.LEFT_BUMPER);
-
-        feedPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_DOWN);
         scorePos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_UP);
-
+        feedPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_DOWN);
 
         setDefaultCommands();
         configureButtonBindings();
@@ -56,22 +57,21 @@ public class RobotContainer {
     public RobotContainer(HardwareMap hwMap, int autoNum, Telemetry telemetry) {
         mecanumDrive = new MecanumDrive(hwMap);
         feederSubsystem = new FeederSubsystem(hwMap);
+        pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
         shooterSubsystem = new ShooterSubsystem(hwMap);
 
         driverController = null;
         intake = null;
         outtake = null;
-
-        feedPos = null;
         scorePos = null;
+        feedPos = null;
 
         setAutoCommands(autoNum, telemetry);
     }
 
     public void setDefaultCommands(){
         driveSubsystem.setDefaultCommand(new TeleOpDriveCommand(driveSubsystem, driverController::getLeftY, driverController::getLeftX, driverController::getRightX));
-        shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, () -> driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
-
+        pivotSubsystem.setDefaultCommand(new PivotPowerCommand(pivotSubsystem, () -> (driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) - driverController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER))));
     }
 
     public void configureButtonBindings(){
@@ -83,8 +83,8 @@ public class RobotContainer {
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
-        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, feederSubsystem, shooterSubsystem);
-        Command RedAutoCommand = new RedAutoCommand(mecanumDrive, feederSubsystem, shooterSubsystem);
+        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem, shooterSubsystem);
+        Command RedAutoCommand = new RedAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem, shooterSubsystem);
 
         switch (chooser) {
             case 0:
