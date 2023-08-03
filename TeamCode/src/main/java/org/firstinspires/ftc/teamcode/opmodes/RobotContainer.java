@@ -33,6 +33,7 @@ public class RobotContainer {
     private final GamepadEx driverController;
     private final GamepadButton intake;
     private final GamepadButton outtake;
+    private final GamepadButton flywheel;
 
     public RobotContainer(HardwareMap hwMap, Gamepad gamepad1, Telemetry telemetry){
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
@@ -43,6 +44,7 @@ public class RobotContainer {
 
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
         outtake = new GamepadButton(driverController, GamepadKeys.Button.LEFT_BUMPER);
+        flywheel = new GamepadButton(driverController, GamepadKeys.Button.Y);
 
         setDefaultCommands();
         configureButtonBindings();
@@ -56,20 +58,24 @@ public class RobotContainer {
         driverController = null;
         intake = null;
         outtake = null;
+        flywheel = null;
 
         setAutoCommands(autoNum, telemetry);
     }
 
     public void setDefaultCommands(){
         driveSubsystem.setDefaultCommand(new TeleOpDriveCommand(driveSubsystem, driverController::getLeftY, driverController::getLeftX, driverController::getRightX));
+//        shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, () -> -driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
     }
 
     public void configureButtonBindings(){
-        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 1).perpetually())
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> -1).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
-        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -1).perpetually())
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> 1).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
-        shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, () -> driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER)));
+
+        flywheel.whileHeld(new ShooterCommand(shooterSubsystem, () -> 1).perpetually())
+                .whenReleased(new ShooterCommand(shooterSubsystem, () -> 0));
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {

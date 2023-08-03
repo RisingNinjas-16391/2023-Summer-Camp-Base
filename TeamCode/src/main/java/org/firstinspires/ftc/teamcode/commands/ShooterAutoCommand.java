@@ -24,7 +24,7 @@ public class ShooterAutoCommand extends CommandBase {
 
     @Override
     public void execute() {
-        shooterSubsystem.setPower(power.getAsDouble());
+        shooterSubsystem.setRPM(power.getAsDouble());
     }
 
     @Override

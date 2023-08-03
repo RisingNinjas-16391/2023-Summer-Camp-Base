@@ -25,11 +25,12 @@ public class ShooterSubsystem extends SubsystemBase {
         this.telemetry = telemetry;
         shooter = hwMap.get(DcMotorEx.class, "shooter");
         shooter.setDirection(DcMotorSimple.Direction.FORWARD);
-        shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        //shooter.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
     @Override
     public void periodic() {
+        calculatePID();
         setPower(desiredPower);
 
         telemetry.addLine("Shooter")

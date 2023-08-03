@@ -14,15 +14,20 @@ public class BlueAutoCommand extends SequentialCommandGroup {
 
     public BlueAutoCommand(MecanumDrive drive, ShooterSubsystem shooter, FeederSubsystem feeder) {
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                        .strafeRight(16)
-                        .forward(48.5)
-                        .waitSeconds(1.5)
-                        .back(44)
-                        .strafeLeft(16)
-                        .strafeRight(16)
-                        .forward(135)
-                        .build())
+                new FeederAutoCommand(feeder, -0.5),
+                new ShooterAutoCommand(shooter, -175)
+//                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+//                        .strafeRight(16)
+//                        .forward(48.5)
+//                        .waitSeconds(1.5)
+//                        .back(44)
+//                        .strafeLeft(16)
+//                        .strafeRight(16)
+//                        .forward(135)
+//                        .build()),
+//                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+//                        .forward(20)
+//                        .build())
         );
 
 
