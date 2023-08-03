@@ -29,7 +29,6 @@ public class RobotContainer {
     private MecanumDrive mecanumDrive;
     private final FeederSubsystem feederSubsystem;
     private final ShooterSubsystem shooterSubsystem;
-    private final PivotSubsystem pivotSubsystem;
     private final GamepadEx driverController;
     private final GamepadButton intake;
     private final GamepadButton outtake;
@@ -40,7 +39,6 @@ public class RobotContainer {
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
         feederSubsystem = new FeederSubsystem(hwMap);
         shooterSubsystem = new ShooterSubsystem(hwMap);
-        pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
 
         driverController = new GamepadEx(gamepad1);
 
@@ -59,7 +57,6 @@ public class RobotContainer {
         mecanumDrive = new MecanumDrive(hwMap);
         feederSubsystem = new FeederSubsystem(hwMap);
         shooterSubsystem = new ShooterSubsystem(hwMap);
-        pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
 
         driverController = null;
         intake = null;
@@ -83,16 +80,11 @@ public class RobotContainer {
 
         outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.5).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
-
-        feedPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(15)));
-
-        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(90)));
-
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
-        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, feederSubsystem);
-        Command RedAutoCommand = new RedAutoCommand(mecanumDrive, feederSubsystem);
+        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, feederSubsystem, shooterSubsystem);
+        Command RedAutoCommand = new RedAutoCommand(mecanumDrive, feederSubsystem, shooterSubsystem);
 
         switch (chooser) {
             case 0:

@@ -10,12 +10,15 @@ import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.helpers.TrajectorySequenceSupplier;
 import org.firstinspires.ftc.teamcode.subsystems.FeederSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 public class BlueAutoCommand extends SequentialCommandGroup {
 
-    public BlueAutoCommand(MecanumDrive drive, FeederSubsystem feeder) {
+    public BlueAutoCommand(MecanumDrive drive, FeederSubsystem feeder, ShooterSubsystem shooter) {
         SequentialCommandGroup autoBlue = new SequentialCommandGroup(
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                new FeederAutoCommand(feeder, 1),
+                new ShooterAutoCommand(shooter, () -> 1),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder(drive.getPoseEstimate())
                         .back(47)
                         .strafeLeft(12)
                         .waitSeconds(1)
@@ -25,8 +28,12 @@ public class BlueAutoCommand extends SequentialCommandGroup {
                         .turn(Math.toRadians(180))
                         .strafeRight(12)
                         .forward(128)
+                        .build()),
+
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                        .forward(20)
                         .build())
-        );
+                );
 
         addCommands(
                 autoBlue

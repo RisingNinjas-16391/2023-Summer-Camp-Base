@@ -8,21 +8,30 @@ import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 import org.firstinspires.ftc.teamcode.helpers.TrajectorySequenceSupplier;
 import org.firstinspires.ftc.teamcode.subsystems.FeederSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 public class RedAutoCommand extends SequentialCommandGroup {
 
-    public RedAutoCommand(MecanumDrive drive, FeederSubsystem feeder) {
+    public RedAutoCommand(MecanumDrive drive, FeederSubsystem feeder, ShooterSubsystem shooter) {
 
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
+                new FeederAutoCommand(feeder, 1),
+                new ShooterAutoCommand(shooter, 1),
                 new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                        .forward (45)
-                        .strafeLeft(15)
-                        .strafeRight(15)
-                        .back(39)
-                        .strafeLeft(15)
-                        .forward (146)
-                        .build()
-        ));
+                    .forward(47)
+                        .build()),
+                new FeederAutoCommand(feeder,0),
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                    .strafeRight(12)
+                    .waitSeconds(3)
+                    .strafeLeft(12)
+                    .back(42)
+                    .waitSeconds(1)
+                    .turn(Math.toRadians(180))
+                    .strafeLeft(12)
+                    .back(128)
+                    .build())
+        );
 
 
         addCommands(

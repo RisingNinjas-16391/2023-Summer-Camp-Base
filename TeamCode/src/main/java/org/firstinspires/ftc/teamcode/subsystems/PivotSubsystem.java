@@ -35,10 +35,10 @@ public class PivotSubsystem extends SubsystemBase {
 
     public static double tolerance = 0.2;
 
-    public PivotSubsystem(@NonNull HardwareMap hwMap, @NonNull Telemetry telemetry){
+    public PivotSubsystem(@NonNull HardwareMap hwMap, @NonNull Telemetry telemetry) {
         pivot = hwMap.get(DcMotorEx.class, "pivot");
         pivot.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        pivot.setDirection(DcMotorSimple.Direction.FORWARD);
+        pivot.setDirection(DcMotorSimple.Direction.REVERSE);
         pivot.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         kPIDF.setTolerance(tolerance);
