@@ -14,60 +14,75 @@ public class RedAutoCommand extends SequentialCommandGroup {
 
     public RedAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder, ShooterSubsystem shooter) {
         SequentialCommandGroup autoRed = new SequentialCommandGroup(
-                new FeederAutoCommand(feeder, 1),
-                new ShooterAutoCommand(shooter, 1),
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                    .forward(47)
-                        .build()),
-                new FeederAutoCommand(feeder,0),
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
-                    .strafeRight(12)
-                    .waitSeconds(3)
-                    .strafeLeft(12)
-                    .back(42)
-                    .waitSeconds(1)
-                    .turn(Math.toRadians(180))
-                    .strafeLeft(12)
-                    .back(128)
-                    .build()),
+                // move the arm to 90 degrees
+                new PivotCommand(pivot, Math.toRadians(80)),
 
-                // Pivot to score
-                new PivotCommand(pivot,Math.toRadians(80)),
-                // Drive to scoring point
-                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((drive.getPoseEstimate()))
-                        .strafeLeft(15)
-                        .build()),
-                // Shoot ball
-                new FeederAutoCommand(feeder,-1),
-                // Group to move arm and move back
                 new ParallelCommandGroup(
-                        new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((drive.getPoseEstimate()))
-                                .strafeRight(15)
-                                .back(64)
-                                .build()),
-                        new PivotCommand(pivot, Math.toRadians(-10))
-                ),
-                // Intake
-                new FeederAutoCommand(feeder,1),
-                // Start driving forward and then raise arm 1sec in
-                new ParallelCommandGroup(
+                        // shoot ball at 30% power
+                        new ShooterAutoCommand(shooter, 0.3),
                         new SequentialCommandGroup(
-                                new WaitCommand(1000),
-                                new PivotCommand(pivot, Math.toRadians(80))
-                        ),
-                        new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((drive.getPoseEstimate()))
-                            .forward(64)
-                            .strafeLeft(15)
-                            .build())),
-                // shoot ball
-                new FeederAutoCommand(feeder, -1),
-                // Wait for ball to shoot
-                new WaitCommand(1000)
-                // Move to park
+                                new WaitCommand(550), // ramps flywheel for 1/2 seconds
+                                new FeederAutoCommand(feeder, 0.7),
+                                new WaitCommand(1000)
+                        )
+                ),
+                //stop shooter and feeder
+                new ShooterAutoCommand(shooter, 0),
+                new FeederAutoCommand(feeder, 0),
+
+
+                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+                        .forward(65)
+                        .build()),
+
+                new PivotCommand(pivot, Math.toRadians(140)),
+                new WaitCommand(2500),
+                new PivotCommand(pivot, Math.toRadians(80)),
+
 //                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((drive.getPoseEstimate()))
-//                        .strafeRight(15)
-//                        .back(95)
-//                        .build())
+//                    .back(50)
+//                    .build()),
+
+                new ParallelCommandGroup(
+                        // shoot ball at 30% power
+                        new ShooterAutoCommand(shooter, 0.3),
+                        new SequentialCommandGroup(
+                                new WaitCommand(950), // ramps flywheel for 1/2 seconds
+                                new FeederAutoCommand(feeder, 0.7),
+                                new WaitCommand(1000)
+                        )
+                ),
+
+                new FeederAutoCommand(feeder, 0),
+                new ShooterAutoCommand(shooter, 0),
+
+                new PivotCommand(pivot, Math.toRadians(140)),
+                new WaitCommand(2500),
+                new PivotCommand(pivot, Math.toRadians(80)),
+
+                new ParallelCommandGroup(
+                        // shoot ball at 30% power
+                        new ShooterAutoCommand(shooter, 0.3),
+                        new SequentialCommandGroup(
+                                new WaitCommand(950), // ramps flywheel for 1/2 seconds
+                                new FeederAutoCommand(feeder, 0.7),
+                                new WaitCommand(1000)
+                        )
+                ),
+
+                new FeederAutoCommand(feeder, 0),
+                new ShooterAutoCommand(shooter, 0)
+
+//                new FollowTrajectoryCommand(drive, () -> drive.trajectorySequenceBuilder((new Pose2d()))
+//                    .strafeRight(12)
+//                    .waitSeconds(3)
+//                    .strafeLeft(12)
+//                    .back(42)
+//                    .waitSeconds(1)
+//                    .turn(Math.toRadians(180))
+//                    .strafeLeft(12)
+//                    .back(128)
+//                    .build()
 
                 );
 

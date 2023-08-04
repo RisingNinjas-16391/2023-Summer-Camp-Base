@@ -6,18 +6,25 @@ import com.arcrobotics.ftclib.command.WaitCommand;
 
 import org.firstinspires.ftc.teamcode.subsystems.FeederSubsystem;
 import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
+import org.firstinspires.ftc.teamcode.subsystems.ShooterSubsystem;
 
 public class ScoreCommand extends SequentialCommandGroup {
-    public ScoreCommand(PivotSubsystem pivot, FeederSubsystem feeder) {
+    public ScoreCommand(PivotSubsystem pivot, FeederSubsystem feeder, ShooterSubsystem shooter) {
         SequentialCommandGroup scoreCommand = new SequentialCommandGroup(
-                new PivotCommand(pivot, Math.toRadians(45)),
-                new WaitCommand(1000),
+                new PivotCommand(pivot, Math.toRadians(80)),
+                new WaitCommand(500),
+
                 new ParallelCommandGroup(
-                        new PivotCommand(pivot, Math.toRadians(100)),
-                        new FeederAutoCommand(feeder, () -> 0.25)
+                        // shoot ball at 30% power
+                        new ShooterAutoCommand(shooter, 0.3),
+                        new SequentialCommandGroup(
+                                new WaitCommand(700), // ramps flywheel for 1 seconds
+                                new FeederAutoCommand(feeder, 0.7),
+                                new WaitCommand(1000)
+                        )
                 ),
-                new WaitCommand(800),
-                new FeederAutoCommand(feeder, () -> 0).withTimeout(100)
+                new FeederAutoCommand(feeder, 0).withTimeout(100),
+                new ShooterAutoCommand(shooter, 0).withTimeout(100)
         );
 
         addCommands(scoreCommand);

@@ -16,6 +16,7 @@ import org.firstinspires.ftc.teamcode.commands.RedAutoCommand;
 import org.firstinspires.ftc.teamcode.commands.FeederCommand;
 import org.firstinspires.ftc.teamcode.commands.PivotCommand;
 import org.firstinspires.ftc.teamcode.commands.ScoreCommand;
+import org.firstinspires.ftc.teamcode.commands.ShooterAutoCommand;
 import org.firstinspires.ftc.teamcode.commands.ShooterCommand;
 import org.firstinspires.ftc.teamcode.commands.TeleOpDriveCommand;
 import org.firstinspires.ftc.teamcode.commands.TeleOpHeadingCommand;
@@ -36,6 +37,9 @@ public class RobotContainer {
     private final GamepadButton outtake;
     private final GamepadButton feedPos;
     private final GamepadButton scorePos;
+    private final GamepadButton rampPos;
+    private final GamepadButton shoot;
+    private final GamepadButton score;
 
     public RobotContainer(HardwareMap hwMap, Gamepad gamepad1, Telemetry telemetry){
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
@@ -47,8 +51,13 @@ public class RobotContainer {
 
         intake = new GamepadButton(driverController, GamepadKeys.Button.RIGHT_BUMPER);
         outtake = new GamepadButton(driverController, GamepadKeys.Button.LEFT_BUMPER);
+
         scorePos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_UP);
         feedPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_DOWN);
+        rampPos = new GamepadButton(driverController, GamepadKeys.Button.DPAD_LEFT);
+
+        shoot = new GamepadButton(driverController, GamepadKeys.Button.A);
+        score = new GamepadButton(driverController, GamepadKeys.Button.Y);
 
         setDefaultCommands();
         configureButtonBindings();
@@ -65,6 +74,9 @@ public class RobotContainer {
         outtake = null;
         scorePos = null;
         feedPos = null;
+        rampPos = null;
+        shoot = null;
+        score = null;
 
         setAutoCommands(autoNum, telemetry);
     }
@@ -78,8 +90,22 @@ public class RobotContainer {
         intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
 
-        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.5).perpetually())
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.3).perpetually())
                 .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
+
+        shoot.whileHeld(new ShooterCommand(shooterSubsystem, () -> 0.7).perpetually())
+            .whenReleased(new ShooterCommand(shooterSubsystem, ()->0));
+
+        score.whenPressed(new ScoreCommand(pivotSubsystem, feederSubsystem, shooterSubsystem));
+
+        scorePos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(80)));
+
+        feedPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(5)));
+        
+        rampPos.whenPressed(new PivotCommand(pivotSubsystem, Math.toRadians(130)));
+
+
+
     }
 
     private void setAutoCommands(int chooser, Telemetry telemetry) {
