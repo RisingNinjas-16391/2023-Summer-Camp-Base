@@ -45,7 +45,7 @@ public class RobotContainer {
         driveSubsystem = new DriveSubsystem(hwMap, telemetry);
         feederSubsystem = new FeederSubsystem(hwMap);
         pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
-        shooterSubsystem = new ShooterSubsystem(hwMap);
+        shooterSubsystem = new ShooterSubsystem(hwMap, telemetry);
 
         driverController = new GamepadEx(gamepad1);
 
@@ -67,7 +67,7 @@ public class RobotContainer {
         mecanumDrive = new MecanumDrive(hwMap);
         feederSubsystem = new FeederSubsystem(hwMap);
         pivotSubsystem = new PivotSubsystem(hwMap, telemetry);
-        shooterSubsystem = new ShooterSubsystem(hwMap);
+        shooterSubsystem = new ShooterSubsystem(hwMap, telemetry);
 
         driverController = null;
         intake = null;

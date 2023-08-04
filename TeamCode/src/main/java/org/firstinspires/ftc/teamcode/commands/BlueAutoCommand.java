@@ -91,6 +91,7 @@ public class BlueAutoCommand extends SequentialCommandGroup {
 //                        .build())
                 );
 
+
         addCommands(
                 autoBlue
         );

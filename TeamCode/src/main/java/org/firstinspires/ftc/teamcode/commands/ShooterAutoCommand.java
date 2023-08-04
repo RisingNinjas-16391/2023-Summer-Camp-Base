@@ -29,7 +29,7 @@ public class ShooterAutoCommand extends CommandBase {
 
     @Override
     public boolean isFinished() {
-        return !shooterSubsystem.isBusy();
+        return shooterSubsystem.atSetpoint();
     }
 }
 
