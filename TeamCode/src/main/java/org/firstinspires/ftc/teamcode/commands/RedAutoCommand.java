@@ -11,7 +11,7 @@ import org.firstinspires.ftc.teamcode.subsystems.PivotSubsystem;
 
 public class RedAutoCommand extends SequentialCommandGroup {
 
-    public RedAutoCommand(MecanumDrive drive, PivotSubsystem pivot, FeederSubsystem feeder) {
+    public RedAutoCommand(MecanumDrive drive) {
         TrajectorySequenceSupplier pathA = () -> drive.trajectorySequenceBuilder((new Pose2d()))
                 .forward(-10)
                 .back(-10)
