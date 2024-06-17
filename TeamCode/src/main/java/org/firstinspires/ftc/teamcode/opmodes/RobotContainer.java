@@ -75,6 +75,7 @@ public class RobotContainer {
 
     public void setDefaultCommands(){
         driveSubsystem.setDefaultCommand(new TeleOpDriveCommand(driveSubsystem, driverController::getLeftY, driverController::getLeftX, driverController::getRightX));
+<<<<<<< Updated upstream
         pivotSubsystem.setDefaultCommand(new PivotPowerCommand(pivotSubsystem, () -> (driverController.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER) - driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER))));
     }
 
@@ -94,6 +95,22 @@ public class RobotContainer {
     private void setAutoCommands(int chooser, Telemetry telemetry) {
         Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem);
         Command RedAutoCommand = new RedAutoCommand(mecanumDrive, pivotSubsystem, feederSubsystem);
+=======
+        shooterSubsystem.setDefaultCommand(new ShooterCommand(shooterSubsystem, () -> driverController.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER) * 140));
+
+    }
+
+    public void configureButtonBindings(){
+        intake.whileHeld(new FeederCommand(feederSubsystem, () -> 0.7).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
+        outtake.whileHeld(new FeederCommand(feederSubsystem, () -> -0.7).perpetually())
+                .whenReleased(new FeederCommand(feederSubsystem, () -> 0));
+    }
+
+    private void setAutoCommands(int chooser, Telemetry telemetry) {
+        Command BlueAutoCommand = new BlueAutoCommand(mecanumDrive, shooterSubsystem, feederSubsystem);
+        Command RedAutoCommand = new RedAutoCommand(mecanumDrive, shooterSubsystem, feederSubsystem);
+>>>>>>> Stashed changes
 
         switch (chooser) {
             case 0:

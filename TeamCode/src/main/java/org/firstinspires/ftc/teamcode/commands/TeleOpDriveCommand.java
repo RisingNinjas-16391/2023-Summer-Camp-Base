@@ -17,6 +17,8 @@ public class TeleOpDriveCommand extends CommandBase {
     public TeleOpDriveCommand(final DriveSubsystem drive, final DoubleSupplier y, final DoubleSupplier x, final DoubleSupplier omega) {
         this.drive = drive;
 
+        drive.reverseDrivetrain();
+
         this.y = y;
         this.x = x;
         this.omega = omega;

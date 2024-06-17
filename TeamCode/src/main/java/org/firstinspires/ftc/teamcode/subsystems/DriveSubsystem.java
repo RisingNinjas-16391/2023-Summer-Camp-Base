@@ -17,12 +17,21 @@ import org.firstinspires.ftc.teamcode.drive.MecanumDrive;
 @Config
 public class DriveSubsystem extends SubsystemBase {
     private final MecanumDrive drive;
+<<<<<<< Updated upstream
     private final PIDFController kPID;
     public static PIDCoefficients turnController = new PIDCoefficients(1.5, 0, 0);
+=======
+    private final PIDFController kHeadingPID;
+    public static PIDCoefficients turnController = new PIDCoefficients(0.5, 0, 0);
+>>>>>>> Stashed changes
 
     private Pose2d desiredDrivePower = new Pose2d(0, 0, 0);
 
     private double desiredHeading = 0;
+<<<<<<< Updated upstream
+=======
+    private boolean flipped = false;
+>>>>>>> Stashed changes
 
     public static double omegaSpeed = 0.5;
     private final Telemetry telemetry;
@@ -36,7 +45,9 @@ public class DriveSubsystem extends SubsystemBase {
 
     @Override
     public void periodic() {
-        drive.setWeightedDrivePower(new Pose2d(desiredDrivePower.getX(), desiredDrivePower.getY(), calculatePID()));
+        //drive.setWeightedDrivePower(new Pose2d(desiredDrivePower.getX(), desiredDrivePower.getY(), calculatePID()));
+
+        drive.setWeightedDrivePower(desiredDrivePower);
 
         telemetry.addLine("Drivetrain")
                 .addData("\nCurrent Heading:", getHeading())
